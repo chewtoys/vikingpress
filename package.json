@@ -1,0 +1,24 @@
+{
+  "name": "vikingpress",
+  "version": "0.0.0",
+  "description": "A new content management system for The Viking Voice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nsmsvikingvoice/vikingpress.git"
+  },
+  "keywords": [
+    "vikingpress",
+    "cms",
+    "newspaper"
+  ],
+  "author": "The Viking Voice",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nsmsvikingvoice/vikingpress/issues"
+  },
+  "homepage": "https://github.com/nsmsvikingvoice/vikingpress#readme"
+}
