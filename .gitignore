@@ -65,3 +65,6 @@ typings/
 
 # VikingPress configuration files
 config/
+
+# VikingPress content files
+content/
