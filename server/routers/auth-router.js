@@ -2,7 +2,7 @@
 maroon.out.debug(__filename, 'Setting up auth router')
 const authActions = require('../actions/auth-actions')
 const passport = require('passport')
-const passportSetup = require('../services/auth-service/passport.js')
+const passportSetup = require('../services/auth-service/passport')
 const authRouter = require('express').Router()
 
 /* Auth routes */

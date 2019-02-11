@@ -27,7 +27,6 @@ async function localStrategyHandler(username, password, done) {
     }]
     /** Use the given username or email address to locate a user in the database. */
     findUserHelper(userSearchCriteria).then(async(error, user) => {
-        maroon.out.trace(user)
         if (error) {
             /** Pass errors to 'catch' block. */
             throw error
