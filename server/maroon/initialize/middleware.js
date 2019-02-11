@@ -1,44 +1,54 @@
-const middlewareList = require('../../config.js').use
+/* global maroon */
+const completeList = require('../../config.js').use
 const { join } = require('path')
-const logger = require('../logger')()
-const readDir = require('../../helpers/read-dir')
-const findFileAndRemove = require('../../helpers/find-file-and-remove')
 
-let pathToServerDir = join(__dirname, '../../')
-let pathToMiddleware = join(pathToServerDir, 'middleware')
-let pathToRouters = join(pathToServerDir, 'routers')
+/** Get path to middleware and router directories. */
+const pathToServerDir = join(__dirname, '../../')
+const pathToMiddleware = join(pathToServerDir, 'middleware')
+const pathToRouters = join(pathToServerDir, 'routers')
 
-module.exports = async function initializeMiddlewareAndRouters(app, config) {
-    let [middleware, routers] = await Promise.all([readDir(pathToMiddleware), readDir(pathToRouters)])
-    console.dir([middleware, routers])
-
-    for (let i = 0; i < middlewareList.length; i++) {
-        let fileName = `${middlewareList[i]}.js`
-        let middlewareOrRouter = await useMiddlewareOrRouter('middleware', middleware, fileName)
-        if (middlewareOrRouter === null) {
-            middlewareOrRouter = await useMiddlewareOrRouter('routers', routers, fileName)
-            if (middlewareOrRouter === null) {
-                return logger.warn(`Couldn't find '${middlewareList[i]}'`)
-            }
-            else {
-                await middlewareOrRouter(app)
-            }
-        }
-        else {
-            await middlewareOrRouter(app)
-        }
+/** Initialize middleware and routers, in the order specified in /server/config.js. */
+module.exports = async function initializeMiddlewareAndRouters(app) {
+    /** Iterate through completeList, the list of routers and middlewares /server/config.js. */
+    for (let i = 0; i < completeList.length; i++) {
+        await initializeSingleMiddleware(completeList[i], app)
     }
 }
 
-async function useMiddlewareOrRouter(type, list, fileName) {
-    if (type === 'routers') {
-        fileName = fileName.replace('.js', '-router.js')
+async function initializeSingleMiddleware(middlewareName, app) {
+    /** Announce that we're running the file. */
+    maroon.out.info(`Initializing ${middlewareName.replace('-',' ')}`)
+    let file
+    /** If the file is named as a middleware, get it from the middleware directory. */
+    if (middlewareName.includes('-middleware')) {
+        try {
+            /** Try requiring the file from the middleware directory. */
+            file = require(`${pathToMiddleware}/${middlewareName}`)
+            file.type = 'middleware'
+        }
+        catch (error) {
+            /** If we can't find the middleware file, throw an error. */
+            maroon.out.error(`Unable to use middleware file '${middlewareName}'.`)
+            throw error
+        }
     }
-    let foundFile = await findFileAndRemove(list, fileName)
-    if (!foundFile) {
-        return null
+    /** If the file is named as a router, get it from the routers directory. */
+    else if (middlewareName.includes('-router')) {
+        try {
+            /** Try requiring the file from the routers directory. */
+            file = require(`${pathToRouters}/${middlewareName}`)
+            file.type = 'router'
+        }
+        catch (error) {
+            /** If we can't find the router file, throw an error. */
+            maroon.out.error(`Unable to use router file '${middlewareName}'.`)
+            throw error
+        }
     }
-    logger.info(`Initializing ${type} '${fileName}'`)
-    let pathToFile = join(__dirname, '../../', type, '/', fileName)
-    return require(pathToFile)
+    else {
+        /** If the file isn't properly named, throw an error. */
+        throw new Error(`Couldn't get '${middlewareName}' because name in /server/config.js is missing '-middleware' or '-router' suffix.`)
+    }
+    /** Run the file. Finally. */
+    return await file.fn(app)
 }

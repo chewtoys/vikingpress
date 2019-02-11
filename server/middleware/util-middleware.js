@@ -5,7 +5,6 @@ const morgan = require('morgan')
 const morganDefault = ':req[x-real-ip] :remote-user \x1b[36m:method :url\x1b[0m HTTP/:http-version :status :res[content-length] - :response-time ms'
 
 module.exports = {
-    action: 'Configuring Maroon utilities',
     fn: async function maroonUtil(app) {
         /** Set up Morgan, for logging. */
         let morganConfig = appConfig.morgan || true

@@ -1,5 +1,5 @@
 /* global maroon */
-const User = require('../../models/User')
+const User = require('../../models/user-model')
 
 /**
  * Search for a certain user

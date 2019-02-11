@@ -22,7 +22,7 @@ module.exports = async function runStartupEvents(app, config) {
         logger.info(`Running startup event '${events[i]}'`)
 
         let pathToEventFile = join(__dirname, '../../events', eventFileName)
-        let eventFile = require(pathToEventFile)
+        let eventFile = require(pathToEventFile).fn
         await eventFile(app, config)
     }
 }

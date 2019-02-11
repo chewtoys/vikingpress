@@ -11,9 +11,11 @@ authRouter.post('/local', authActions.local.authenticate)
 /** Initialize auth router
  * @param {function} app - Express app function
  */
-module.exports = async function(app) {
-    app.use(passport.initialize())
-    passportSetup(passport)
+module.exports = {
+    fn: async function(app) {
+        app.use(passport.initialize())
+        passportSetup(passport)
 
-    app.use('/api/auth', authRouter)
+        app.use('/api/auth', authRouter)
+    }
 }

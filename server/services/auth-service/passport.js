@@ -1,5 +1,5 @@
 /* global maroon */
-const User = require('../../models/User')
+const User = require('../../models/user-model')
 const googleStrategy = require('./google-strategy')()
 const localStrategy = require('./local-strategy')()
 

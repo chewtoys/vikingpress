@@ -2,14 +2,14 @@
 module.exports = {
     /** List startup events in the order in which they should run. */
     events: [
-        'connect-to-db'
+        'db-connect'
     ],
 
     /** List router and middleware files in the order in which they should be used. */
     use: [
-        'configure',
-        'maroon-util',
-        'auth'
+        'config-middleware',
+        'util-middleware',
+        'auth-router'
     ],
 
     /** Set view engine and views directory. */
