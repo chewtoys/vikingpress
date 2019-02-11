@@ -21,7 +21,7 @@ module.exports = async function findUserHelper(criteria, getInfo, useAnd) {
             return await findUser('or', criteria, infoToReturn)
         }
     }
-    else if (!Array.isArray(criteria) && typeof criteria === 'object') {
+    else if (typeof criteria === 'object') {
         /** If criteria is an object, search using one condition. */
         return await findUser('where', criteria, infoToReturn)
     }
@@ -39,7 +39,7 @@ module.exports = async function findUserHelper(criteria, getInfo, useAnd) {
  */
 async function findUser(queryType, criteria, infoToReturn) {
     let query = queryType || 'where'
-    return await User[query](criteria).findOne(null, infoToReturn, async function(error, user) {
+    return await User.where()[queryType](criteria).findOne(null, infoToReturn, async function(error, user) {
         if (error) {
             throw error
         }

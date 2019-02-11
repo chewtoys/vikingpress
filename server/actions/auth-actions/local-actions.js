@@ -1,26 +1,11 @@
 /* global maroon */
 maroon.out.debug(__filename, 'Set up local auth action')
-const jwt = require('jsonwebtoken')
+const handleAuthentication = require('./handle-authentication')
 const passport = require('passport')
 
+/** Authenticate using local strategy. */
 module.exports.authenticate = (req, res, next) => {
-    passport.authenticate('local', async function authenticationHandler(user, err, info) {
-        if (err) {
-            return next(err)
-        }
-        if (!user) {
-            return next('ACCOUNT_NOT_FOUND')
-        }
-        req.login(user, {
-            session: false
-        }, (error) => {
-            if (error) {
-                return next(error)
-            }
-            let authToken = jwt.sign({
-                user: user._id
-            }, maroon.config.keys.private)
-            res.send({ token: authToken })
-        })
+    passport.authenticate('local', async(user, err, info) => {
+        return await handleAuthentication({ user, err, info }, { req, res, next })
     })(req, res, next)
 }

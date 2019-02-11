@@ -1,7 +1,6 @@
 /* global maroon */
 const User = require('../../models/User')
 const googleStrategy = require('./google-strategy')()
-const jwtStrategy = require('./jwt-strategy')()
 const localStrategy = require('./local-strategy')()
 
 /** Convert user object to user ID */
@@ -37,6 +36,5 @@ module.exports = async function passportSetup(passport) {
 
     /** Set up strategies */
     passport.use('google', googleStrategy)
-    passport.use('jwt', jwtStrategy)
     passport.use('local', localStrategy)
 }
