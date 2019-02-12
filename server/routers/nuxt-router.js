@@ -6,6 +6,6 @@ module.exports = {
      * @param {function} app - Express app function
      */
     fn: async function initializeNuxtRouter(app) {
-        app.use('*', renderNuxt)
+        app.get('*', renderNuxt)
     }
 }
