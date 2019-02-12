@@ -1,21 +1,20 @@
 /* global maroon */
 maroon.out.debug(__filename, 'Setting up auth router')
 const authActions = require('../actions/auth-actions')
-const passport = require('passport')
-const passportSetup = require('../services/auth-service/passport')
 const authRouter = require('express').Router()
 
-/* Auth routes */
+/* Local auth route */
 authRouter.post('/local', authActions.local.authenticate)
+
+/* Google auth routes */
+authRouter.get('/google/start', authActions.google.start)
+authRouter.get('/google/callback', authActions.google.callback)
 
 /** Initialize auth router
  * @param {function} app - Express app function
  */
 module.exports = {
-    fn: async function(app) {
-        app.use(passport.initialize())
-        passportSetup(passport)
-
+    fn: async function initializeAuthRouter (app) {
         app.use('/api/auth', authRouter)
     }
 }

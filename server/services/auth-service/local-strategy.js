@@ -4,12 +4,14 @@ const findUserHelper = require('./find-user')
 const LocalStrategy = require('passport-local')
 
 module.exports = function initializeLocalAuthStrategy() {
-    maroon.out.debug(__filename, 'Initializing local auth strategy')
+    /** Assemble configuration info for local auth strategy. */
     let localStrategyConfig = {
         usernameField: 'username',
         passwordField: 'password',
         session: false
     }
+
+    /** Return local auth strategy, to be passed to passport.use(). */
     return new LocalStrategy(localStrategyConfig, localStrategyHandler)
 }
 

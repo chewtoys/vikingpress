@@ -4,6 +4,7 @@ const logger = require('./logger.js')(null, 5)
 
 module.exports = class MaroonServer {
     constructor(config) {
+        console.clear()
         this.app = app
         this.config = config
         this.out = logger

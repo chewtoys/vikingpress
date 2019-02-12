@@ -1,4 +1,4 @@
 module.exports = {
-    local: require('./local-actions')
+    local: require('./local-auth'),
+    google: require('./google-auth')
 }
-

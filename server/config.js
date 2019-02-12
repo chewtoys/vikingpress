@@ -9,6 +9,7 @@ module.exports = {
     use: [
         'config-middleware',
         'util-middleware',
+        'auth-middleware',
         'auth-router'
     ],
 
