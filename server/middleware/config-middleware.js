@@ -5,7 +5,6 @@ const helmet = require('helmet')
 const { join } = require('path')
 
 module.exports = {
-    name: 'Express app configuration',
     fn: async function configure(app) {
         /** Set view engine. */
         app.set('view engine', appConfig.views.engine)

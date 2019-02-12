@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema({
     legacyId: Number,
+    
     name: {
         first: String,
         last: String,

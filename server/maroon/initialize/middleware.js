@@ -7,9 +7,12 @@ const pathToServerDir = join(__dirname, '../../')
 const pathToMiddleware = join(pathToServerDir, 'middleware')
 const pathToRouters = join(pathToServerDir, 'routers')
 
-/** Initialize middleware and routers, in the order specified in /server/config.js. */
+/** 
+ * Initialize middleware and routers, in the order specified in /server/config.js.
+ * @param {function} app - Express app function
+ */
 module.exports = async function initializeMiddlewareAndRouters(app) {
-    /** Iterate through completeList, the list of routers and middlewares /server/config.js. */
+    /** Iterate through completeList, the list of routers and middleware in /server/config.js. */
     for (let i = 0; i < completeList.length; i++) {
         await initializeSingleMiddleware(completeList[i], app)
     }

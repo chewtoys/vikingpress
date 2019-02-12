@@ -1,28 +1,34 @@
-const { events } = require('../../config.js')
-const findFileAndRemove = require('../../helpers/find-file-and-remove')
+/* global maroon */
+const eventList = require('../../config.js').events
 const { join } = require('path')
-const logger = require('../logger')()
-const pathToEventsDir = join(__dirname, '../../events')
-const readDir = require('../../helpers/read-dir')
+
+/** Get path to events directory. */
+const pathToEvents = join(__dirname, '../../events')
 
 /**
- * Run startup events.
+ * Run startup events, in the order specified in /server/config.js.
  * @param {function} app - Express app function
- * @param {object} config - Deployment config info
  */
-module.exports = async function runStartupEvents(app, config) {
-    let eventsDir = await readDir(pathToEventsDir)
-
-    for (let i = 0; i < events.length; i++) {
-        let eventFileName = await findFileAndRemove(eventsDir, i)
-        if (!eventFileName) {
-            return logger.warn(`Could not find event '${events[i]}'`)
-        }
-
-        logger.info(`Running startup event '${events[i]}'`)
-
-        let pathToEventFile = join(__dirname, '../../events', eventFileName)
-        let eventFile = require(pathToEventFile).fn
-        await eventFile(app, config)
+module.exports = async function runEvents(app) {
+    /** Iterate through eventList, the list of events in /server/config.js. */
+    for (let i = 0; i < eventList.length; i++) {
+        await runSingleEvent(eventList[i], app)
     }
+}
+
+async function runSingleEvent(eventName, app) {
+    /** Announce that we're running the file. */
+    maroon.out.info(`Running ${eventName.replace('-',' ')} event`)
+    let file
+    try {
+        /** Try requiring the file from the events directory. */
+        file = require(`${pathToEvents}/${eventName}-event`)
+    }
+    catch (error) {
+        /** If we can't find the event file, throw an error. */
+        maroon.out.error(`Unable to run event file '${eventName}'.`)
+        throw error
+    }
+    /** Run the file. */
+    return await file.fn(app)
 }

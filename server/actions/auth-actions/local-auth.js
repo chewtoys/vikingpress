@@ -1,5 +1,4 @@
 /* global maroon */
-maroon.out.debug(__filename, 'Set up local auth action')
 const handleAuthentication = require('./handle-authentication')
 const passport = require('passport')
 
