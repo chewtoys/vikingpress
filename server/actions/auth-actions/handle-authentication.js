@@ -1,5 +1,5 @@
 /* global maroon */
-// const jwt = 
+const jwt = require('jsonwebtoken')
 
 /**
  * After passport.authenticate() runs, handle the results.
@@ -24,7 +24,7 @@ module.exports = async function handleAuthentication({ err, user, info }, { req,
     /** Try to create and send an auth token for the user. */
     try {
         let { privateKey, options } = maroon.config.jwt
-        let authToken = require('jsonwebtoken').sign({
+        let authToken = jwt.sign({
             userId: user._id
         }, privateKey, options)
         return res.send({ token: authToken })
