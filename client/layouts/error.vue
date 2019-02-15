@@ -12,30 +12,30 @@
 </template>
 
 <script>
-export default {
-        layout: 'vv-auth',
-  name: 'NuxtError',
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
-  head() {
-    return {
-      title: `Error ${this.statusCode}`
-    }
-  },
-  computed: {
-    statusCode() {
-      return (this.error && this.error.statusCode) || 500
+  export default {
+    layout: 'accounts',
+    name: 'NuxtError',
+    head() {
+      return {
+        title: `Error ${this.statusCode} | The Viking Voice`
+      }
     },
-    message() {
-      return this.error.message || `<%= messages.client_error %>`
+    props: {
+      error: {
+        type: Object,
+        default: null
+      }
+    },
+    computed: {
+      statusCode() {
+        return (this.error && this.error.statusCode) || 500
+      },
+      message() {
+        return this.error.message
+      }
     }
+
   }
-  
-}
 </script>
 
 <style>

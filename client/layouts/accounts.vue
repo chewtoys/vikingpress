@@ -12,11 +12,16 @@
 </template>
 
 <script>
-    export default {
-    }
+    export default {}
 </script>
 
 <style>
+    #vv-signin {
+        background-color: #fff;
+        margin: auto;
+        padding: 30px;
+    }
+
     @media only screen and (min-width: 441px) {
 
         html,
@@ -37,6 +42,7 @@
 
         #vv-signin {
             border: 1px solid #e0e2db;
+            padding: 40px;
         }
 
         #vv-signin-wrapper {
@@ -45,16 +51,9 @@
         }
     }
 
-    #vv-signin {
-        background-color: #fff;
-        margin: auto;
-        padding: 40px;
-    }
-
     h1 {
         font-weight: 600;
         font-size: 24px;
-        line-height: 28px;
     }
 
     img {
@@ -94,21 +93,23 @@
         background-color: rgba(25, 187, 187, .25);
         outline: none;
     }
-    
+
     .btn-primary {
         background-color: #138e8e;
         border: none !important;
         border-bottom: 2px solid #0d6161 !important;
     }
 
-    .btn-primary:hover, .btn-primary:active {
+    .btn-primary:hover,
+    .btn-primary:active {
         background-color: #0d6161 !important;
     }
-    
+
     a:first-of-type:focus {
         box-shadow: none !important;
     }
-    a:first-of-type:focus > img {
+
+    a:first-of-type:focus>img {
         box-shadow: 0 0 0 .2rem rgba(25, 187, 187, .25) !important;
     }
 </style>
