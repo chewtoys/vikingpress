@@ -12,7 +12,8 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+    }
 </script>
 
 <style>
@@ -86,6 +87,7 @@
 
     a:hover {
         color: #0d6161;
+        text-decoration: underline;
     }
 
     a:focus {
@@ -95,11 +97,18 @@
     
     .btn-primary {
         background-color: #138e8e;
-        border: none;
-        border-bottom: 2px solid #0d6161
+        border: none !important;
+        border-bottom: 2px solid #0d6161 !important;
     }
 
-    .btn-primary:hover {
-        background-color: #0d6161;
+    .btn-primary:hover, .btn-primary:active {
+        background-color: #0d6161 !important;
+    }
+    
+    a:first-of-type:focus {
+        box-shadow: none !important;
+    }
+    a:first-of-type:focus > img {
+        box-shadow: 0 0 0 .2rem rgba(25, 187, 187, .25) !important;
     }
 </style>
