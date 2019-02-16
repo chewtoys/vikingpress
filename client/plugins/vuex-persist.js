@@ -2,8 +2,8 @@
 
 import VuexPersistence from 'vuex-persist'
 
-export default ({store}) => {
-    return new VuexPersistence({
-        // Insert options here.
-    }).plugin(store);
+export default ({ store }) => {
+  return new VuexPersistence({
+    // Insert options here.
+  }).plugin(store)
 }

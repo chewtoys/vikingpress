@@ -1,18 +1,22 @@
 <template>
-    <div id="vv-signin">
-        <div id="vv-signin-wrapper">
-            <nuxt-link to="/">
-                <img src="https://nsmsvikingvoice.org/wp-content/uploads/2018/02/VV-header-retina-300x74.png" alt="The Viking Voice" class="mb-4" />
-            </nuxt-link>
-            <transition>
-                <Nuxt />
-            </transition>
-        </div>
+  <div id="vv-signin">
+    <div id="vv-signin-wrapper">
+      <nuxt-link to="/">
+        <img
+          src="https://nsmsvikingvoice.org/wp-content/uploads/2018/02/VV-header-retina-300x74.png"
+          alt="The Viking Voice"
+          class="mb-4"
+        >
+      </nuxt-link>
+      <transition>
+        <Nuxt />
+      </transition>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {}
+export default {}
 </script>
 
 <style>

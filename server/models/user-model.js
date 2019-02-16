@@ -2,24 +2,24 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-    legacyId: Number,
-    
-    name: {
-        first: String,
-        last: String,
-        display: String
-    },
+  legacyId: Number,
 
-    email: String,
-    username: String,
+  name: {
+    first: String,
+    last: String,
+    display: String
+  },
 
-    auth: {
-        provider: String,
-        password: String,
-        oauthId: String
-    }
+  email: String,
+  username: String,
 
-    /* These will be used in the future.
+  auth: {
+    provider: String,
+    password: String,
+    oauthId: String
+  }
+
+  /* These will be used in the future.
     posts: [{
         type: Schema.Types.ObjectId,
         ref: 'Post'
