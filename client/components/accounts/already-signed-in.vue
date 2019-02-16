@@ -30,8 +30,8 @@ export default {
   },
   methods: {
     signOut () {
-      this.$store.commit('UPDATE_USER', 'SIGN_OUT')
-      this.$store.commit('UPDATE_SIGNINSTATE', 0)
+      this.$store.commit('accounts/UPDATE_USER', 'SIGN_OUT')
+      this.$store.commit('accounts/UPDATE_SIGNINSTATE', 0)
     }
   }
 }

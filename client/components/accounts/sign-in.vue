@@ -61,12 +61,12 @@ export default {
         // Insert account provider logic here.
       } else if (account.provider === 'Local') {
       /** If the account exists and it's a local account, let them enter their password. */
-        this.$store.commit('user/UPDATE_USER', {
+        this.$store.commit('accounts/UPDATE_USER', {
           username: account.username,
           firstName: account.firstName,
           authenticated: false
         })
-        this.$store.commit('user/UPDATE_SIGNINSTATE', 1)
+        this.$store.commit('accounts/UPDATE_SIGNINSTATE', 1)
       } else {
       /** If we've made it here, something has gone wrong. Handle the error. */
         // Uh oh. Handle the error.
