@@ -22,22 +22,22 @@ async function initializeSingleMiddleware (middlewareName, app) {
   /** Announce that we're running the file. */
   maroon.out.info(`Initializing ${middlewareName.replace('-', ' ')}`)
   let file
-  if (middlewareName.includes('-middleware')) {
+  if (middlewareName.startsWith('middleware/')) {
   /** If the file is named as a middleware, get it from the middleware directory. */
     try {
       /** Try requiring the file from the middleware directory. */
-      file = require(`${pathToMiddleware}/${middlewareName}`)
+      file = require(`${pathToMiddleware}/${middlewareName.replace('middleware/','')}`)
       file.type = 'middleware'
     } catch (error) {
       /** If we can't find the middleware file, throw an error. */
       maroon.out.error(`Unable to use middleware file '${middlewareName}'.`)
       throw error
     }
-  } else if (middlewareName.includes('-router')) {
+  } else if (middlewareName.startsWith('routers/')) {
     /** If the file is named as a router, get it from the routers directory. */
     try {
       /** Try requiring the file from the routers directory. */
-      file = require(`${pathToRouters}/${middlewareName}`)
+      file = require(`${pathToRouters}/${middlewareName.replace('routers/','')}`)
       file.type = 'router'
     } catch (error) {
       /** If we can't find the router file, throw an error. */

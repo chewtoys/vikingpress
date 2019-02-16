@@ -1,7 +1,7 @@
 /* global maroon */
 const { Nuxt, Builder } = require('nuxt')
 
-let nuxtConfig = require('../../config/nuxt')
+let nuxtConfig = require('../../../config/nuxt')
 nuxtConfig.dev = maroon.config.env === 'DEVELOPMENT'
 
 module.exports = {

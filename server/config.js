@@ -2,17 +2,17 @@
 module.exports = {
   /** List startup events in the order in which they should run. */
   events: [
-    'db-connect',
-    'nuxt-init'
+    'connect-to-db',
+    'nuxt/init'
   ],
 
   /** List router and middleware files in the order in which they should be used. */
   use: [
-    'config-middleware',
-    'util-middleware',
-    'auth-middleware',
-    'auth-router',
-    'nuxt-router'
+    'middleware/config',
+    'middleware/util',
+    'middleware/auth',
+    'routers/accounts',
+    'routers/nuxt'
   ],
 
   /** Set view engine and views directory. */

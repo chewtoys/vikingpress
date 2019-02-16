@@ -1,4 +1,4 @@
-const renderNuxt = require('../actions/render-nuxt')
+const renderNuxt = require('../actions/nuxt/render')
 
 module.exports = {
   /** Initialize Nuxt router

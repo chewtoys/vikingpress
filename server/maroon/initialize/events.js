@@ -3,7 +3,7 @@ const eventList = require('../../config.js').events
 const { join } = require('path')
 
 /** Get path to events directory. */
-const pathToEvents = join(__dirname, '../../events')
+const pathToEvents = join(__dirname, '../../actions')
 
 /**
  * Run startup events, in the order specified in /server/config.js.
@@ -18,11 +18,11 @@ module.exports = async function runEvents (app) {
 
 async function runSingleEvent (eventName, app) {
   /** Announce that we're running the file. */
-  maroon.out.info(`Running ${eventName.replace('-', ' ')} event`)
+  maroon.out.info(`Running ${eventName.replace('/', ' ').replace(/-/g, ' ')} event`)
   let file
   try {
     /** Try requiring the file from the events directory. */
-    file = require(`${pathToEvents}/${eventName}-event`)
+    file = require(`${pathToEvents}/${eventName}`)
   } catch (error) {
     /** If we can't find the event file, throw an error. */
     maroon.out.error(`Unable to run event file '${eventName}'.`)

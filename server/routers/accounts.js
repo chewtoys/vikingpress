@@ -1,17 +1,17 @@
-const authActions = require('../actions/auth-actions')
+const authActions = require('../actions/auth')
 
-/** Initialize authRouter. */
-const authRouter = require('express').Router()
+/** Initialize accountsRouter. */
+const accountsRouter = require('express').Router()
 
 /** Local auth route */
-authRouter.post('/local', authActions.local.authenticate)
+accountsRouter.post('/local', authActions.local.authenticate)
 
 /** Google auth routes */
-authRouter.get('/google/start', authActions.google.start)
-authRouter.get('/google/callback', authActions.google.callback)
+accountsRouter.get('/google/start', authActions.google.start)
+accountsRouter.get('/google/callback', authActions.google.callback)
 
 /** Verify if an account exists */
-authRouter.post('/verify', (req, res) => {
+accountsRouter.post('/verify', (req, res) => {
   /** Example account here for debugging on frontend.
      * @todo Replace this with an actual database call.
      */
@@ -29,7 +29,7 @@ module.exports = {
   /** Initialize auth router
      * @param {function} app - Express app function
      */
-  fn: async function initializeAuthRouter (app) {
-    app.use('/api/accounts', authRouter)
+  fn: async function initializeAccountsRouter (app) {
+    app.use('/api/accounts', accountsRouter)
   }
 }
