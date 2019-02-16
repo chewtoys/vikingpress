@@ -3,7 +3,7 @@
     <div id="vv-signin-wrapper">
       <nuxt-link to="/">
         <img
-          src="https://nsmsvikingvoice.org/wp-content/uploads/2018/02/VV-header-retina-300x74.png"
+          src="~/assets/vv-logo.png"
           alt="The Viking Voice"
           class="mb-4"
         >
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-export default {}
+    export default {}
 </script>
 
 <style>
@@ -101,12 +101,15 @@ export default {}
     .btn-primary {
         background-color: #138e8e;
         border: none !important;
-        border-bottom: 2px solid #0d6161 !important;
     }
 
     .btn-primary:hover,
     .btn-primary:active {
         background-color: #0d6161 !important;
+    }
+
+    .btn-primary:active {
+        border-bottom: none !important;
     }
 
     a:first-of-type:focus {
