@@ -1,5 +1,5 @@
 /* global maroon */
-const initializePassport = require('../services/auth-service/passport')
+const initializePassport = require('../services/auth/passport')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user-model')
 
