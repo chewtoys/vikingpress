@@ -1,4 +1,4 @@
-const handleAuthentication = require('./handle-authentication')
+const handleAuthentication = require('./common')
 const passport = require('passport')
 
 /** Send the user to enter their credentials with Google. */

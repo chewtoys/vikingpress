@@ -1,4 +1,4 @@
-const handleAuthentication = require('./handle-authentication')
+const handleAuthentication = require('./common')
 const passport = require('passport')
 
 /** Authenticate using local strategy. */
