@@ -1,11 +1,9 @@
 <template>
   <div id="enter-password">
-    <header class="mb-3">
-      <h1>Welcome, {{ user.firstName }}!</h1>
-      <p>
-        Please enter your password.
-      </p>
-    </header>
+    <h1>Welcome, {{ user.firstName }}!</h1>
+    <p>
+      Please enter your password.
+    </p>
     <form @submit.prevent="signIn">
       <div class="form-group mb-3">
         <label
@@ -19,13 +17,12 @@
           placeholder="Password"
           required=""
           autofocus=""
-          autocomplete="off"
         >
       </div>
       <div class="row">
         <div class="col-8 d-flex">
           <nuxt-link
-            to="/accounts/forgot-password"
+            to="/accounts/reset-password"
             class="small"
             title="Reset my password"
           >
