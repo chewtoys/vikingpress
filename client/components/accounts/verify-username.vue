@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit(usernameInput)">
     <div class="form-group mb-3">
       <label
         for="username"

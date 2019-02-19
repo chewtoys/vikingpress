@@ -1,6 +1,7 @@
+const accountActions = require('../actions/account')
 const authActions = require('../actions/auth')
 
-/** Initialize accountsRouter. */
+/** Initialize accountsRouter */
 const accountsRouter = require('express').Router()
 
 /** Local auth route */
@@ -11,19 +12,16 @@ accountsRouter.get('/google/start', authActions.google.start)
 accountsRouter.get('/google/callback', authActions.google.callback)
 
 /** Verify if an account exists */
-accountsRouter.post('/verify', (req, res) => {
-  /** Example account here for debugging on frontend.
-     * @todo Replace this with an actual database call.
-     */
-  let account = {
-    exists: true,
-    firstName: 'Jane',
-    lastName: 'Doe',
-    username: 'doej',
-    provider: 'Local'
-  }
-  res.send(account)
-})
+accountsRouter.post('/find', accountActions.findAccount)
+
+/** Begin password reset */
+accountsRouter.post('/recovery/begin', accountActions.beginPasswordReset)
+
+/** Find reset request */
+accountsRouter.post('/recovery/find', accountActions.findResetRequest)
+
+/** Reset password */
+accountsRouter.post('/recovery/reset', accountActions.resetPassword)
 
 module.exports = {
   /** Initialize auth router
