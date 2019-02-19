@@ -20,32 +20,31 @@
 </template>
 
 <script>
-  export default {
-    layout: 'accounts',
-    head() {
-      return {
-        title: `Account Recovery | The Viking Voice`
-      }
-    },
-    async asyncData({ app, redirect, store }) {
-      /** Get user ID from store. */
-      let username = store.state.accounts.user.username
-      /** If there's no user ID stored, redirect to the sign-in page. */
-      if (!username) {
-        return redirect('/accounts/sign-in')
-      }
-      try {
-        /** Request password reset via API. Await result. */
-        let { data } = await app.$axios.post('/api/accounts/recovery/begin', { username })
-        /** Set local variable emailAddress equal to the result from the API call. */
-        return data
-      }
-      catch (e) {
-        /** If the request failed, show an error page. */
-        return { success: false }
-      }
+export default {
+  layout: 'accounts',
+  head () {
+    return {
+      title: `Account Recovery | The Viking Voice`
+    }
+  },
+  async asyncData ({ app, redirect, store }) {
+    /** Get user ID from store. */
+    let username = store.state.accounts.user.username
+    /** If there's no user ID stored, redirect to the sign-in page. */
+    if (!username) {
+      return redirect('/accounts/sign-in')
+    }
+    try {
+      /** Request password reset via API. Await result. */
+      let { data } = await app.$axios.post('/api/accounts/recovery/begin', { username })
+      /** Set local variable emailAddress equal to the result from the API call. */
+      return data
+    } catch (e) {
+      /** If the request failed, show an error page. */
+      return { success: false }
     }
   }
+}
 </script>
 
 <style>

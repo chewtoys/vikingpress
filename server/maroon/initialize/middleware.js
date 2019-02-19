@@ -26,7 +26,7 @@ async function initializeSingleMiddleware (middlewareName, app) {
   /** If the file is named as a middleware, get it from the middleware directory. */
     try {
       /** Try requiring the file from the middleware directory. */
-      file = require(`${pathToMiddleware}/${middlewareName.replace('middleware/','')}`)
+      file = require(`${pathToMiddleware}/${middlewareName.replace('middleware/', '')}`)
       file.type = 'middleware'
     } catch (error) {
       /** If we can't find the middleware file, throw an error. */
@@ -37,7 +37,7 @@ async function initializeSingleMiddleware (middlewareName, app) {
     /** If the file is named as a router, get it from the routers directory. */
     try {
       /** Try requiring the file from the routers directory. */
-      file = require(`${pathToRouters}/${middlewareName.replace('routers/','')}`)
+      file = require(`${pathToRouters}/${middlewareName.replace('routers/', '')}`)
       file.type = 'router'
     } catch (error) {
       /** If we can't find the router file, throw an error. */

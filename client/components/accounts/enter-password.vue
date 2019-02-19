@@ -1,9 +1,9 @@
 <template>
   <div id="enter-password">
-      <h1>Welcome, {{ user.name.first }}!</h1>
-      <p>
-        Please enter your password.
-      </p>
+    <h1>Welcome, {{ user.name.first }}!</h1>
+    <p>
+      Please enter your password.
+    </p>
     <form @submit.prevent="signIn">
       <div class="form-group mb-3">
         <label
@@ -46,29 +46,29 @@
 </template>
 
 <script>
-  export default {
-    name: 'EnterPassword',
-    props: {
-      'user': {
-        type: Object,
-        default () {
-          return {
-            username: null,
-            name: {
-              first: null
-            },
-            authenticated: false
-          }
+export default {
+  name: 'EnterPassword',
+  props: {
+    'user': {
+      type: Object,
+      default () {
+        return {
+          username: null,
+          name: {
+            first: null
+          },
+          authenticated: false
         }
       }
-    },
-    methods: {
-      signIn() {
+    }
+  },
+  methods: {
+    signIn () {
 
-      },
-      goBack() {
-        this.$store.commit('accounts/UPDATE_SIGNINSTATE', 0)
-      }
+    },
+    goBack () {
+      this.$store.commit('accounts/UPDATE_SIGNINSTATE', 0)
     }
   }
+}
 </script>
