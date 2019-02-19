@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const findUserHelper = require('./common')
+const findUserHelper = require('../../helpers/find-user')
 const LocalStrategy = require('passport-local')
 
 module.exports = function initializeLocalAuthStrategy () {

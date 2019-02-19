@@ -1,7 +1,7 @@
 const googleStrategy = require('./google-strategy')()
 const localStrategy = require('./local-strategy')()
 const passport = require('passport')
-const User = require('../../models/user-model')
+const User = require('../../models/accounts/user')
 
 /** Convert user object to user ID. */
 async function serializeUser (user, done) {

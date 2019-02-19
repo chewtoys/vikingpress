@@ -1,7 +1,7 @@
 /* global maroon */
 const initializePassport = require('../services/auth/passport')
 const jwt = require('jsonwebtoken')
-const User = require('../models/user-model')
+const User = require('../models/accounts/user')
 
 module.exports = {
   fn: async function authenticationMiddleware (app) {

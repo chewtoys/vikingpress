@@ -1,7 +1,7 @@
 /* global maroon */
-const findUserHelper = require('./common')
+const findUserHelper = require('../../helpers/find-user')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const User = require('../../models/user-model')
+const User = require('../../models/accounts/user')
 
 module.exports = function initializeGoogleAuthStrategy () {
   /** Assemble configuration info for Google auth strategy. */
