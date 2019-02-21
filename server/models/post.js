@@ -5,20 +5,32 @@ const postSchema = new Schema({
     legacyId: Number,
     title: String,
     dek: String,
-    body: String,
+    body: {
+        raw: String
+    },
+    media: {
+        type: {
+            type: String,
+            default: 'embed'
+        },
+        list: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Media'
+        }]
+    }
     meta: {
         authors: [{
             type: Schema.Types.ObjectId,
             ref: 'User'
         }],
-        collections: {
+        collections: [{
             type: Schema.Types.ObjectId,
             ref: 'Collection'
-        },
+        }],
         featured: Boolean,
         featuredImage: {
             type: Schema.Types.ObjectId,
-            ref: 'Image'
+            ref: 'Media'
         },
         created: {
             type: Date,
@@ -44,7 +56,19 @@ const postSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-        body: String
+    body: {
+        raw: String
+    },
+        media: {
+            type: {
+                type: String,
+                default: 'embed'
+            },
+            list: [{
+                type: Schema.Types.ObjectId,
+                ref: 'Media'
+            }]
+        }
     }],
     comments: [{
         type: Schema.Types.ObjectId,

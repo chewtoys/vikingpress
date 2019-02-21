@@ -10,28 +10,38 @@ const userSchema = new Schema({
     display: String
   },
 
+  bio: String,
+
   email: String,
   username: String,
 
   auth: {
     provider: String,
     password: String,
+    legacyPassword: String,
     oauthId: String
-  }
+  },
 
-  /* These will be used in the future.
-    posts: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Post'
-    }],
-    collections: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Collection'
-    }],
-    media: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Media'
-    }] */
+  permissions: Number,
+
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
+  media: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment'
+  }]
+
+  /* This will be used in the future.
+  collections: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Collection'
+  }] */
 })
 
 module.exports = mongoose.model('User', userSchema)

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Schema = Schema
+const Schema = mongoose.Schema
 
 const commentSchema = new Schema({
     legacyId: Number,
@@ -8,7 +8,11 @@ const commentSchema = new Schema({
         ip: String,
         email: String,
         userAgent: String,
-        referrer: String
+        referrer: String,
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
     },
     created: {
         type: Date,
@@ -19,7 +23,11 @@ const commentSchema = new Schema({
         ref: 'Post'
     },
     content: String,
-    status: String
+    status: String,
+    replyTo: {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+    }
 })
 
 module.exports = mongoose.model('Comment', commentSchema)

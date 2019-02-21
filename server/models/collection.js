@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Schema = Schema
+const Schema = mongoose.Schema
 
 const collectionSchema = new Schema({
     legacyId: Number,
@@ -9,8 +9,8 @@ const collectionSchema = new Schema({
     description: String,
     featuredImage: {
         type: Schema.Types.ObjectId,
-        ref: 'Image'
-    },    
+        ref: 'Media'
+    },
     parent: this,
     children: [this],
     posts: [{
