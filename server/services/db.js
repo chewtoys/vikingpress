@@ -12,7 +12,7 @@ let allAssociations = []
 
 /** Get the name of this file */
 const nameOfThisFile = path.basename(__filename)
-const pathToModels = path.join(__dirname, '../../models/')
+const pathToModels = path.join(__dirname, '../models/')
 
 /** Read the models directory */
 readdirSync(pathToModels)
@@ -34,8 +34,8 @@ readdirSync(pathToModels)
 
 /** Run each association function, passing in the database object as a parameter */
 for (let i = 0; i < allAssociations.length; i++) {
-    allAssociations[i](database)
-}
+        allAssociations[i](database)
+    }
 
 database.sequelize = sequelize
 database.Sequelize = Sequelize

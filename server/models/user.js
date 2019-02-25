@@ -37,13 +37,13 @@ const model = (sequelize, DataTypes) => {
 /** Model associations */
 const associations = (models) => {
   /** Posts */
-  models.User.belongsToMany(models.Post, { through: 'PostAuthors' })
+  models.User.belongsToMany(models.Post, { through: 'PostAuthors', constraints: false })
   /** Comments */
-  models.User.hasMany(models.Comment, { as: 'CommentAuthor', foreignKey: 'AuthorId' })
+  models.User.hasMany(models.Comment, { as: 'CommentAuthor', foreignKey: 'AuthorId', constraints: false })
   /** Media */
-  models.User.hasMany(models.Media, { as: 'MediaAuthor', foreignKey: 'AuthorId' })
+  models.User.hasMany(models.Media, { as: 'MediaAuthor', foreignKey: 'AuthorId', constraints: false })
   /** Collections */
-  models.User.belongsToMany(models.Collection, { through: 'CollectionAuthors' })
+  models.User.belongsToMany(models.Collection, { through: 'CollectionAuthors', constraints: false })
 }
 
 module.exports = { name, model, associations }

@@ -12,23 +12,25 @@ const jwt = require('jsonwebtoken')
  * @param {object} fromExpress.res - Response
  * @param {function} fromExpress.next - Go to next middleware
  */
-module.exports = async function handleAuthentication ({ err, user, info }, { req, res, next }) {
+module.exports = async function handleAuthentication({ err, user, info }, { req, res, next }) {
   /** If there's an error, handle it. */
   if (err) {
     return next(err)
   }
   /** If a user couldn't be found, go to next. */
   if (!user) {
-    return next('ACCOUNT_NOT_FOUND')
+    let response = info.message || 'ACCOUNT_NOT_FOUND'
+    return next(response)
   }
   /** Try to create and send an auth token for the user. */
   try {
     let { privateKey, options } = maroon.config.jwt
     let authToken = jwt.sign({
-      userId: user._id
+      userId: user.id
     }, privateKey, options)
     return res.send({ token: authToken })
-  } catch (error) {
+  }
+  catch (error) {
     return next(error)
   }
 }

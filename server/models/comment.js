@@ -27,14 +27,14 @@ const model = (sequelize, DataTypes) => {
 /** Model associations */
 const associations = (models) => {
   /** User */
-  models.Comment.belongsTo(models.User, { as: 'Author' })
+  models.Comment.belongsTo(models.User, { as: 'Author', constraints: false })
 
   /** Post */
-  models.Comment.belongsTo(models.Post)
+  models.Comment.belongsTo(models.Post, {constraints: false})
 
   /** Replies */
-  models.Comment.hasMany(models.Comment, { as: 'Reply', foreignKey: 'ReplyToCommentId' })
-  models.Comment.belongsTo(models.Comment, { as: 'ReplyTo', foreignKey: 'ReplyToCommentId' })
+  models.Comment.hasMany(models.Comment, { as: 'Reply', foreignKey: 'ReplyToCommentId', constraints: false })
+  models.Comment.belongsTo(models.Comment, { as: 'ReplyTo', foreignKey: 'ReplyToCommentId', constraints: false })
 }
 
 module.exports = { name, model, associations }

@@ -1,10 +1,10 @@
 /* global maroon */
 const initializePassport = require('../services/auth/passport')
 const jwt = require('jsonwebtoken')
-const User = require('../models/accounts/user')
+const { User } = require('../services/db')
 
 module.exports = {
-  fn: async function authenticationMiddleware (app) {
+  fn: async function authenticationMiddleware(app) {
     /** Initialize Passport.js. */
     initializePassport(app)
 
@@ -12,26 +12,28 @@ module.exports = {
     app.use((req, res, next) => {
       req.maroon = {}
       /** Check if the request is authenticated. */
-      req.maroon.isAuthenticated = async () => {
+      req.maroon.isAuthenticated = async() => {
         try {
           let isAuthenticated = await getUserFromReq(req, false)
           if (isAuthenticated) {
             return true
           }
           return false
-        } catch (error) {
+        }
+        catch (error) {
           return false
         }
       }
       /** Get user from request. */
-      req.maroon.getUser = async () => {
+      req.maroon.getUser = async() => {
         try {
           let user = await getUserFromReq(req, true)
           if (user) {
             return user
           }
           return null
-        } catch (error) {
+        }
+        catch (error) {
           return null
         }
       }
@@ -46,7 +48,7 @@ module.exports = {
  * @param {object} req - Express request
  * @param {boolean} [returnAll = true] - Return entire user object
  */
-async function getUserFromReq (req, returnAll) {
+async function getUserFromReq(req, returnAll) {
   let all = returnAll || true
 
   /** Get JWT information from config. */
@@ -57,15 +59,16 @@ async function getUserFromReq (req, returnAll) {
   let verifiedToken = jwt.verify(rawToken, publicKey, options)
 
   if (all) {
-  /** If all is true, the entire user object will be returned. */
-    let user = await User.findById(verifiedToken.userId)
+    /** If all is true, the entire user object will be returned. */
+    let user = await User.findOne({ where: { id: verifiedToken.userId } })
     if (user) {
       return user
     }
     return null
-  } else {
+  }
+  else {
     /** Otherwise, return true/false (to indicate whether the user exists) is returned. */
-    let count = await User.findById(verifiedToken.userId).countDocuments()
+    let count = await User.findAndCountAll({ where: { id: verifiedToken.userId } })
     if (count > 0) {
       return true
     }

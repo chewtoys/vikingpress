@@ -31,10 +31,10 @@ const model = (sequelize, DataTypes) => {
 /** Model associations */
 const associations = (models) => {
   /** Posts */
-  models.Media.belongsTo(models.Post, { as: 'Attachment', foreignKey: 'AttachedToPostId' })
+  models.Media.belongsTo(models.Post, { as: 'Attachment', foreignKey: 'AttachedToPostId', constraints: false })
 
   /** Authors */
-  models.Media.belongsTo(models.User, { as: 'Author' })
+  models.Media.belongsTo(models.User, { as: 'Author', constraints: false })
 }
 
 module.exports = { name, model, associations }

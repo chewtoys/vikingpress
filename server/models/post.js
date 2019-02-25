@@ -39,12 +39,12 @@ const model = (sequelize, DataTypes) => {
 /** Model associations */
 const associations = (models) => {
   /** Revisions */
-  models.Post.hasMany(models.Post, { as: 'Revisions', foreignKey: 'ParentId' })
+  models.Post.hasMany(models.Post, { as: 'Revisions', foreignKey: 'ParentId', constraints: false })
   /** Parent post (for revisions) */
-  models.Post.belongsTo(models.Post, { as: 'Parent' })
+  models.Post.belongsTo(models.Post, { as: 'Parent', constraints: false })
 
   /** Authors */
-  models.Post.belongsToMany(models.User, { as: 'Authors', through: 'PostAuthors' })
+  models.Post.belongsToMany(models.User, { as: 'Authors', through: 'PostAuthors', constraints: false })
   /** Collections */
   models.Post.belongsToMany(models.Collection, { as: 'Collections', through: 'PostCollections' })
   /** Featured Image */
