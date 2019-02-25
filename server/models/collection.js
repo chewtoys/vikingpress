@@ -1,22 +1,47 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+/** Name of model */
+const name = 'Collection'
 
-const collectionSchema = new Schema({
-    legacyId: Number,
-    type: String,
-    title: String,
-    slug: String,
-    description: String,
-    featuredImage: {
-        type: Schema.Types.ObjectId,
-        ref: 'Media'
+/** Model schema definition */
+const model = (sequelize, DataTypes) => {
+  return sequelize.define(name, {
+    /** Meta information */
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
     },
-    parent: this,
-    children: [this],
-    posts: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Post'
-    }]
-})
+    title: DataTypes.STRING,
+    status: {
+      type: DataTypes.ENUM,
+      values: ['open', 'closed'],
+      defaultValue: 'open'
+    },
+    type: {
+      type: DataTypes.ENUM,
+      values: ['category', 'contest'],
+      defaultValue: 'category'
+    },
+    slug: DataTypes.STRING,
+    featured: { type: DataTypes.BOOLEAN, defaultValue: false },
+    description: DataTypes.TEXT
+  })
+}
 
-module.exports = mongoose.model('Collection', collectionSchema)
+/** Model associations */
+const associations = (models) => {
+  /** Parent category */
+  models.Collection.belongsTo(models.Collection, { as: 'Parent', foreignKey: 'ParentCategoryId' })
+  /** Child categories */
+  models.Collection.hasMany(models.Collection, { as: 'ChildCategories', foreignKey: 'ParentCategoryId' })
+
+  /** Authors */
+  models.Collection.belongsToMany(models.User, { as: 'Authors', through: 'CollectionAuthors' })
+  /** Featured Image */
+  models.Collection.belongsTo(models.Media, { as: 'FeaturedImage' })
+
+  /** Posts */
+  models.Collection.belongsToMany(models.Post, { as: 'Post', through: 'PostCollections' })
+}
+
+module.exports = { name, model, associations }

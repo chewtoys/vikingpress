@@ -1,12 +1,10 @@
-/* global maroon */
-const mongoose = require('mongoose')
-const dbAddress = maroon.config.dbAddress
+const db = require('../services/db')
 
 module.exports = {
-  /** Connect to MongoDB */
+  /** Connect to database */
   fn: async function connectToDB () {
     try {
-      await mongoose.connect(dbAddress, { useNewUrlParser: true })
+      await db.sequelize.sync()
     } catch (error) {
       throw error
     }

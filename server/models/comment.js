@@ -1,33 +1,40 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+/** Name of model */
+const name = 'Comment'
 
-const commentSchema = new Schema({
-    legacyId: Number,
-    author: {
-        name: String,
-        ip: String,
-        email: String,
-        userAgent: String,
-        referrer: String,
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
+/** Model schema definition */
+const model = (sequelize, DataTypes) => {
+  return sequelize.define(name, {
+    /** Meta information */
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
     },
-    created: {
-        type: Date,
-        default: Date.now
+    status: {
+      type: DataTypes.ENUM,
+      values: ['hold', 'approved', 'spam', 'trash']
     },
-    onPost: {
-        type: Schema.Types.ObjectId,
-        ref: 'Post'
-    },
-    content: String,
-    status: String,
-    replyTo: {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }
-})
+    authorName: DataTypes.STRING,
+    authorEmailAddress: DataTypes.STRING,
+    authorIp: DataTypes.STRING,
+    authorUserAgent: DataTypes.STRING,
+    authorReferrer: DataTypes.STRING,
+    content: DataTypes.TEXT
+  })
+}
 
-module.exports = mongoose.model('Comment', commentSchema)
+/** Model associations */
+const associations = (models) => {
+  /** User */
+  models.Comment.belongsTo(models.User, { as: 'Author' })
+
+  /** Post */
+  models.Comment.belongsTo(models.Post)
+
+  /** Replies */
+  models.Comment.hasMany(models.Comment, { as: 'Reply', foreignKey: 'ReplyToCommentId' })
+  models.Comment.belongsTo(models.Comment, { as: 'ReplyTo', foreignKey: 'ReplyToCommentId' })
+}
+
+module.exports = { name, model, associations }

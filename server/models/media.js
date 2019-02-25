@@ -1,28 +1,40 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+/** Name of model */
+const name = 'Media'
 
-const mediaSchema = new Schema({
-    legacyId: Number,
-    name: String,
-    
-    meta: {
-        author: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        date: { type: Date, default: Date.now },
-        type: { type: String, default: 'attachment' },
-        mimeType: String,
-        onPost: {
-            type: Schema.Types.ObjectId,
-            ref: 'Post'
-        }
+/** Model schema definition */
+const model = (sequelize, DataTypes) => {
+  return sequelize.define(name, {
+    /** Meta information */
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
     },
+    title: DataTypes.STRING,
+    type: {
+      type: DataTypes.ENUM,
+      values: ['attachment'], // This will be added to in the future
+      defaultValue: 'attachment'
+    },
+    mimeType: DataTypes.STRING,
+    path: DataTypes.STRING,
+    slug: DataTypes.STRING,
 
-    caption: { type: String, default: '' },
-    alt: { type: String, default: '' },
+    /** Content */
+    altText: DataTypes.STRING,
+    caption: DataTypes.TEXT,
+    content: DataTypes.BLOB('long')
+  })
+}
 
-    data: Buffer
-})
+/** Model associations */
+const associations = (models) => {
+  /** Posts */
+  models.Media.belongsTo(models.Post, { as: 'Attachment', foreignKey: 'AttachedToPostId' })
 
-module.exports = mongoose.model('Media', mediaSchema)
+  /** Authors */
+  models.Media.belongsTo(models.User, { as: 'Author' })
+}
+
+module.exports = { name, model, associations }

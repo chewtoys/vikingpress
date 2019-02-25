@@ -1,79 +1,57 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+/** Name of model */
+const name = 'Post'
 
-const postSchema = new Schema({
-    legacyId: Number,
-    title: String,
-    dek: String,
-    body: {
-        raw: String
+/** Model schema definition */
+const model = (sequelize, DataTypes) => {
+  return sequelize.define(name, {
+    /** Meta information */
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
     },
-    media: {
-        type: {
-            type: String,
-            default: 'embed'
-        },
-        list: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Media'
-        }]
-    }
-    meta: {
-        authors: [{
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }],
-        collections: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Collection'
-        }],
-        featured: Boolean,
-        featuredImage: {
-            type: Schema.Types.ObjectId,
-            ref: 'Media'
-        },
-        created: {
-            type: Date,
-            default: Date.now
-        },
-        updated: {
-            type: Date,
-            default: Date.now
-        },
-        status: String,
-        path: String,
-        slug: String
+    title: DataTypes.STRING,
+    status: {
+      type: DataTypes.ENUM,
+      values: ['deleted', 'draft', 'pending', 'published', 'inherit']
     },
-    revisions: [{
-        revision: Number,
-        title: String,
-        dek: String,
-        date: {
-            type: Date,
-            default: Date.now
-        },
-        author: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        },
-    body: {
-        raw: String
+    type: {
+      type: DataTypes.ENUM,
+      values: ['post', 'revision']
     },
-        media: {
-            type: {
-                type: String,
-                default: 'embed'
-            },
-            list: [{
-                type: Schema.Types.ObjectId,
-                ref: 'Media'
-            }]
-        }
-    }],
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }]
-})
+    path: DataTypes.STRING,
+    slug: DataTypes.STRING,
+    featured: {
+      type: DataTypes.ENUM,
+      values: ['true', 'false', 'inherit']
+    },
 
-module.exports = mongoose.model('Post', postSchema)
+    /** Content */
+    dek: DataTypes.TEXT,
+    body: DataTypes.TEXT,
+
+    /** Temporary */
+    media: DataTypes.JSON
+  })
+}
+
+/** Model associations */
+const associations = (models) => {
+  /** Revisions */
+  models.Post.hasMany(models.Post, { as: 'Revisions', foreignKey: 'ParentId' })
+  /** Parent post (for revisions) */
+  models.Post.belongsTo(models.Post, { as: 'Parent' })
+
+  /** Authors */
+  models.Post.belongsToMany(models.User, { as: 'Authors', through: 'PostAuthors' })
+  /** Collections */
+  models.Post.belongsToMany(models.Collection, { as: 'Collections', through: 'PostCollections' })
+  /** Featured Image */
+  models.Post.belongsTo(models.Media, { as: 'FeaturedImage' })
+
+  /** Comments */
+  models.Post.hasMany(models.Comment, { as: 'Comments' })
+}
+
+module.exports = { name, model, associations }
