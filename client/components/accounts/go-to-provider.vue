@@ -1,15 +1,15 @@
 <template>
   <div id="enter-password">
-    <h1>Welcome, {{ user.name.first }}!</h1>
+    <h1>Welcome, {{ user.firstName }}!</h1>
     <p>
-      To continue, sign in with your {{user.auth.provider}} account.
+      To continue, sign in with your {{user.authProvider}} account.
     </p>
       <div class="row">
         <div class="col-5 d-flex">
         </div>
         <div class="col-7">
-          <a class="btn btn-primary btn-block" :href="'/api/accounts/'+user.auth.provider+'/start'">
-            Continue to {{user.auth.provider}}
+          <a class="btn btn-primary btn-block" :href="'/api/accounts/'+user.authProvider+'/start'">
+            Continue to {{user.authProvider}}
           </a>
         </div>
       </div>

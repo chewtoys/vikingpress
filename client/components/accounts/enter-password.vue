@@ -1,6 +1,6 @@
 <template>
   <div id="enter-password">
-    <h1>Welcome, {{ user.name.first }}!</h1>
+    <h1>Welcome, {{ user.firstName }}!</h1>
     <p>
       Please enter your password.
     </p>
@@ -54,9 +54,7 @@ export default {
       default () {
         return {
           username: null,
-          name: {
-            first: null
-          },
+          firstName: null,
           authenticated: false
         }
       }
