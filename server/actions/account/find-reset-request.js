@@ -1,6 +1,6 @@
 const { User } = require('../../services/db')
 
-module.exports = async(req, res) => {
+module.exports = async (req, res) => {
   /** Extract the request ID from the request body. */
   let { requestId } = req.body
 

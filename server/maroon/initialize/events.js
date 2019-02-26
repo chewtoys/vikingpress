@@ -1,4 +1,3 @@
-/* global maroon */
 const eventList = require('../../config.js').events
 const { join } = require('path')
 

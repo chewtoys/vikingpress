@@ -1,4 +1,3 @@
-/* global maroon */
 const { Nuxt, Builder } = require('nuxt')
 
 let nuxtConfig = require('../../../config/nuxt')

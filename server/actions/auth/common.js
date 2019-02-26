@@ -1,4 +1,3 @@
-/* global maroon */
 const jwt = require('jsonwebtoken')
 
 /**
@@ -12,7 +11,7 @@ const jwt = require('jsonwebtoken')
  * @param {object} fromExpress.res - Response
  * @param {function} fromExpress.next - Go to next middleware
  */
-module.exports = async function handleAuthentication({ err, user, info }, { req, res, next }) {
+module.exports = async function handleAuthentication ({ err, user, info }, { req, res, next }) {
   /** If there's an error, handle it. */
   if (err) {
     return next(err)
@@ -29,8 +28,7 @@ module.exports = async function handleAuthentication({ err, user, info }, { req,
       userId: user.id
     }, privateKey, options)
     return res.send({ token: authToken })
-  }
-  catch (error) {
+  } catch (error) {
     return next(error)
   }
 }

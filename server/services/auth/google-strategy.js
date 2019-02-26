@@ -1,9 +1,7 @@
-/* global maroon */
-const findUserHelper = require('../../helpers/find-user')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const { User } = require('../../services/db')
 
-module.exports = function initializeGoogleAuthStrategy() {
+module.exports = function initializeGoogleAuthStrategy () {
   /** Assemble configuration info for Google auth strategy. */
   let googleStrategyConfig = {
     /** Pull clientID and clientSecret from maroon.config. */
@@ -28,7 +26,7 @@ module.exports = function initializeGoogleAuthStrategy() {
  * @param {object} googleProfile - Returned from Google API call
  * @param {function} done - From Passport
  */
-async function googleStrategyHandler(accessToken, refreshToken, googleProfile, done) {
+async function googleStrategyHandler (accessToken, refreshToken, googleProfile, done) {
   /** Step #1: Try to find an existing user with the same Google Account ID */
   let userFromId = await User.findOne({
     where: {
@@ -52,8 +50,7 @@ async function googleStrategyHandler(accessToken, refreshToken, googleProfile, d
       return done(null, null, {
         message: 'UNKNOWN_ERROR'
       })
-    }
-    else {
+    } else {
       /** Otherwise, if their auth provider isn't Google, return
        * an error indicating that the wrong auth provider was used.
        */

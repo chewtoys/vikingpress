@@ -1,4 +1,3 @@
-/* global maroon */
 const initializeMiddlewareAndRouters = require('./middleware')
 const logger = require('../logger')()
 const runStartupEvents = require('./events')

@@ -1,4 +1,3 @@
-/* global maroon */
 const appConfig = require('../config.js')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')

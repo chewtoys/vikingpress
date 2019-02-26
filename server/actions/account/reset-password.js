@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const { User } = require('../../services/db')
 
-module.exports = async(req, res) => {
+module.exports = async (req, res) => {
   /** Extract the request ID and new password from the request body. */
   let { requestId, password } = req.body
 
@@ -11,13 +11,12 @@ module.exports = async(req, res) => {
   /** Return an error if it's a bad request. */
   if (!user) {
     return res.status(400).send('That reset request does not exist.')
-  }
-  else if (!password || !requestId) {
+  } else if (!password || !requestId) {
     return res.status(400).send('Missing password or request ID')
   }
 
   /** Hash the new password. */
-  bcrypt.hash(password, 10, async(err, newPasswordHash) => {
+  bcrypt.hash(password, 10, async (err, newPasswordHash) => {
     /** Handle potential errors. */
     if (err) return res.status(500).send('Unable to reset password.')
 

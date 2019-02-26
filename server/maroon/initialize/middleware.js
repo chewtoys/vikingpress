@@ -1,4 +1,3 @@
-/* global maroon */
 const completeList = require('../../config.js').use
 const { join } = require('path')
 

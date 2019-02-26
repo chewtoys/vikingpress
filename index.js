@@ -3,8 +3,6 @@ const config = require('./config/app')
 
 global.maroon = new MaroonServer(config)
 
-/* global maroon */
-
 try {
   maroon.initialize()
 } catch (error) {

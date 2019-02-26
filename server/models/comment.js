@@ -30,7 +30,7 @@ const associations = (models) => {
   models.Comment.belongsTo(models.User, { as: 'Author', constraints: false })
 
   /** Post */
-  models.Comment.belongsTo(models.Post, {constraints: false})
+  models.Comment.belongsTo(models.Post, { constraints: false })
 
   /** Replies */
   models.Comment.hasMany(models.Comment, { as: 'Reply', foreignKey: 'ReplyToCommentId', constraints: false })

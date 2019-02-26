@@ -4,12 +4,12 @@ const passport = require('passport')
 const { User } = require('../../services/db')
 
 /** Convert user object to user ID. */
-async function serializeUser(user, done) {
+async function serializeUser (user, done) {
   return done(null, user.id)
 }
 
 /** Convert user ID to user object. */
-async function deserializeUser(id, done) {
+async function deserializeUser (id, done) {
   try {
     let user = await User.findOneById({ where: { id } })
     if (!user) {
@@ -18,8 +18,7 @@ async function deserializeUser(id, done) {
       })
     }
     return done(null, user)
-  }
-  catch (error) {
+  } catch (error) {
     return done(error)
   }
 }
@@ -28,7 +27,7 @@ async function deserializeUser(id, done) {
  * Set up Passport
  * @param {function} app - Express app function
  */
-module.exports = async function initializePassport(app) {
+module.exports = async function initializePassport (app) {
   /** Set up serialize/deserialize functions. */
   passport.serializeUser(serializeUser)
   passport.deserializeUser(deserializeUser)

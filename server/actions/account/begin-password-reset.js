@@ -1,9 +1,8 @@
-/* global maroon */
 const findUserByUsername = require('../../helpers/find-user')
 const sendMail = require('../../services/email/send-mail')
 const { randomBytes } = require('crypto')
 
-module.exports = async(req, res) => {
+module.exports = async (req, res) => {
   /** Extract username from request body. */
   let username = req.body.username
 
@@ -13,8 +12,7 @@ module.exports = async(req, res) => {
   /** Send an error 400 (bad request) if the user isn't found. */
   if (!user) {
     return res.status(400).send('Bad Request: User not found.')
-  }
-  else if (user.authProvider !== 'Local') {
+  } else if (user.authProvider !== 'Local') {
     return res.status(400).send(`You can only reset the password of a local account. This account uses ${user.authProvider} as its authentication provider.`)
   }
 
