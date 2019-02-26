@@ -1,7 +1,7 @@
 /* global maroon */
 const initializePassport = require('../services/auth/passport')
 const jwt = require('jsonwebtoken')
-const User = require('../models/accounts/user')
+const {User} = require('../services/db')
 
 module.exports = {
   fn: async function authenticationMiddleware (app) {
@@ -57,7 +57,7 @@ async function getUserFromReq (req, returnAll) {
   let verifiedToken = jwt.verify(rawToken, publicKey, options)
 
   if (all) {
-  /** If all is true, the entire user object will be returned. */
+    /** If all is true, the entire user object will be returned. */
     let user = await User.findById(verifiedToken.userId)
     if (user) {
       return user
