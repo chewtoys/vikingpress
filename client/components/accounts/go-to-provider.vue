@@ -1,6 +1,6 @@
 <template>
   <div id="enter-password">
-    <h1>Welcome, {{ user.firstName }}!</h1>
+    <h1>{{ user.welcomeMessage }}</h1>
     <p>
       To continue, sign in with your {{user.authProvider}} account.
     </p>
@@ -31,12 +31,8 @@
         default () {
           return {
             username: null,
-            name: {
-              first: null
-            },
-            auth: {
-              provider: null
-            },
+            welcomeMessage: 'Welcome!',
+            authProvider: null,
             authenticated: false
           }
         }

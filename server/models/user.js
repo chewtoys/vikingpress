@@ -17,6 +17,7 @@ const model = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
 
     /** Name */
+    honorific: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     displayName: DataTypes.STRING,

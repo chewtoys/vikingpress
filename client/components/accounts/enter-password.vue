@@ -1,6 +1,6 @@
 <template>
   <div id="enter-password">
-    <h1>Welcome, {{ user.firstName }}!</h1>
+    <h1>{{ user.welcomeMessage }}</h1>
     <p>
       Please enter your password.
     </p>
@@ -46,27 +46,27 @@
 </template>
 
 <script>
-export default {
-  name: 'EnterPassword',
-  props: {
-    'user': {
-      type: Object,
-      default () {
-        return {
-          username: null,
-          firstName: null,
-          authenticated: false
+  export default {
+    name: 'EnterPassword',
+    props: {
+      'user': {
+        type: Object,
+        default () {
+          return {
+            username: null,
+            welcomeMessage: 'Welcome!',
+            authenticated: false
+          }
         }
       }
-    }
-  },
-  methods: {
-    signIn () {
-
     },
-    goBack () {
-      this.$store.commit('accounts/UPDATE_SIGNINSTATE', 0)
+    methods: {
+      signIn() {
+
+      },
+      goBack() {
+        this.$store.commit('accounts/UPDATE_SIGNINSTATE', 0)
+      }
     }
   }
-}
 </script>
