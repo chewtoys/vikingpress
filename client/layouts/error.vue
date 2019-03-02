@@ -1,43 +1,51 @@
 <template>
   <main class="vv-accounts">
     <div>
-    <header>
-      <h1 class="title has-bottom-margin-1" v-if="statusCode === 404">
-        Sorry, we couldn't find the page you requested.
-      </h1>
-      <h1 class="title has-bottom-margin-1" v-else>
-        {{ message }}
-      </h1>
-    </header>
-      <nuxt-link to="/">Back to home page</nuxt-link>
-      </div>
+      <header>
+        <h1
+          v-if="statusCode === 404"
+          class="title has-bottom-margin-1"
+        >
+          Sorry, we couldn't find the page you requested.
+        </h1>
+        <h1
+          v-else
+          class="title has-bottom-margin-1"
+        >
+          {{ message }}
+        </h1>
+      </header>
+      <nuxt-link to="/">
+        Back to home page
+      </nuxt-link>
+    </div>
   </main>
 </template>
 
 <script>
-  export default {
-    layout: 'default',
-    name: 'NuxtError',
-    head() {
-      return {
-        title: `Error ${this.statusCode} | The Viking Voice`
-      }
+export default {
+  layout: 'default',
+  name: 'NuxtError',
+  head () {
+    return {
+      title: `Error ${this.statusCode} | The Viking Voice`
+    }
+  },
+  props: {
+    error: {
+      type: Object,
+      default: null
+    }
+  },
+  computed: {
+    statusCode () {
+      return (this.error && this.error.statusCode) || 500
     },
-    props: {
-      error: {
-        type: Object,
-        default: null
-      }
-    },
-    computed: {
-      statusCode() {
-        return (this.error && this.error.statusCode) || 500
-      },
-      message() {
-        return this.error.message
-      }
+    message () {
+      return this.error.message
     }
   }
+}
 </script>
 
 <style>

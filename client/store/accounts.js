@@ -13,11 +13,11 @@ export default {
   /* Account Actions */
   actions: {
     /** Get user info from store. */
-    FETCH_USER({ state }) {
+    FETCH_USER ({ state }) {
       return state.user
     },
     /** Get sign in state from store. */
-    GET_SIGNIN_STATE({ state }) {
+    GET_SIGNIN_STATE ({ state }) {
       return state.signInState
     }
   },
@@ -31,11 +31,9 @@ export default {
         Object.keys(state.user).forEach(key => {
           state.user[key] = null
         })
-      }
-      else if (!user) {
+      } else if (!user) {
         /** If no information is provided, don't change anything. */
-      }
-      else {
+      } else {
         /** Update the state with the information provided. */
         state.user = { ...state.user, ...user }
       }

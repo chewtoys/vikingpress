@@ -1,24 +1,36 @@
 <template>
   <div id="vv">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <nuxt-link class="navbar-item" to="/">
-      The Viking Voice
-    </nuxt-link>
+    <nav
+      class="navbar"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <nuxt-link
+          class="navbar-item"
+          to="/"
+        >
+          The Viking Voice
+        </nuxt-link>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-</nav>
-<Nuxt />
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </a>
+      </div>
+    </nav>
+    <Nuxt />
   </div>
 </template>
 
 <script>
-  export default {}
+export default {}
 </script>
 
 <style>
