@@ -1,18 +1,12 @@
 <template>
-  <div id="enter-password">
-    <h1>{{ user.welcomeMessage }}</h1>
-    <p>
+  <div class="box vv-accounts">
+    <h1 class="title">{{ user.welcomeMessage }}</h1>
+    <p class="subtitle">
       To continue, sign in with your {{user.authProvider}} account.
     </p>
-      <div class="row">
-        <div class="col-5 d-flex">
-        </div>
-        <div class="col-7">
-          <a class="btn btn-primary btn-block" :href="'/api/accounts/'+user.authProvider+'/start'">
+          <a class="button is-info" :href="'/api/accounts/'+user.authProvider+'/start'">
             Continue to {{user.authProvider}}
           </a>
-        </div>
-      </div>
     <hr role="presentation">
     <a
       href="#"

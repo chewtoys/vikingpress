@@ -1,40 +1,27 @@
 <template>
-  <div id="enter-password">
-    <h1>{{ user.welcomeMessage }}</h1>
-    <p>
+  <div>
+    <h1 class="title">{{ user.welcomeMessage }}</h1>
+    <p class="subtitle">
       Please enter your password.
     </p>
     <form @submit.prevent="signIn">
-      <div class="form-group mb-3">
-        <label
-          for="password"
-          class="sr-only"
-        >Password</label>
-        <input
-          id="password"
-          type="password"
-          class="form-control"
-          placeholder="Password"
-          required=""
-          autofocus=""
-        >
-      </div>
-      <div class="row">
-        <div class="col-8 d-flex">
-          <nuxt-link
-            to="/accounts/recovery/begin"
-            class="small"
+      
+    <b-field label="Password">
+      <b-input v-model.trim="passwordInput" />
+    </b-field>
+    <div class="is-clearfix">
+          <a
+            href="#"
+            @click="resetPassword"
+            class="is-pulled-left is-small"
             title="Reset my password"
           >
             Forgot your password?
-          </nuxt-link>
+          </a>
+        <button class="button is-info is-pulled-right">
+          Next
+        </button>
         </div>
-        <div class="col-4">
-          <button class="btn btn-primary btn-block">
-            Sign In
-          </button>
-        </div>
-      </div>
     </form>
     <hr role="presentation">
     <a
@@ -42,18 +29,26 @@
       title="Go back"
       @click="goBack"
     ><span role="presentation">&lt; </span> Back</a>
+    
+    <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false" />
   </div>
 </template>
 
 <script>
   export default {
     name: 'EnterPassword',
+    data() {
+      return {
+        isLoading: false,
+        passwordInput: ''
+      }
+    },
     props: {
       'user': {
         type: Object,
         default () {
           return {
-            username: null,
+            username: '',
             welcomeMessage: 'Welcome!',
             authenticated: false
           }
@@ -66,6 +61,29 @@
       },
       goBack() {
         this.$store.commit('accounts/UPDATE_SIGNINSTATE', 0)
+      },
+      async resetPassword() {
+        this.isLoading = true
+        /** Get user ID from store. */
+        let username = this.user.username
+        /** If there's no user ID stored, redirect to the sign-in page. */
+        if (!username) {
+          await this.$store.commit('accounts/UPDATE_SIGNINSTATE', 0)
+          return
+        }
+        try {
+          /** Request password reset via API. Await result. */
+          let { data } = await this.$axios.post('/api/accounts/recovery/begin', { username })
+          /** Set local variable emailAddress equal to the result from the API call. */
+          let { emailAddress } = data
+          console.log(`The request worked and the email address is ${emailAddress}`)
+          await this.$store.commit('accounts/UPDATE_USER', { emailAddress })
+          this.$router.push('/accounts/recovery/begin')
+        }
+        catch (e) {
+          /** If the request failed, show an error page. */
+          return { success: false }
+        }
       }
     }
   }

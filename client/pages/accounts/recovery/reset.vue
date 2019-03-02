@@ -1,9 +1,9 @@
 <template>
-  <main>
+  <main class="vv-accounts">
     <div v-if="state === 'SUCCESS'">
-      <header class="mb-3">
-        <span class="text-muted">Account recovery</span>
-        <h1>Your password has been reset.</h1>
+      <header>
+        <span class="is-size-5 has-text-grey">Account recovery</span>
+        <h1 class="title has-bottom-margin-1">Your password has been changed.</h1>
       </header>
       <p>You can now sign in with your new password.</p>
       <div class="row">
@@ -27,44 +27,45 @@
 </template>
 
 <script>
-import createNewPassword from '~/components/accounts/recovery/create-new-password'
-export default {
-  layout: 'accounts',
-  components: {
-    createNewPassword
-  },
-  head () {
-    return {
-      title: `Account Recovery | The Viking Voice`
-    }
-  },
-  async asyncData ({ app, redirect, query, req }) {
-    /** Get request ID from the URL query. */
-    let requestId = req.query.request || query.request
-    /** If there's no request ID, redirect to the sign-in page. */
-    if (!requestId) {
-      console.log('NO REQUEST ID')
-      return redirect('/accounts/sign-in')
-    }
+  import createNewPassword from '~/components/accounts/recovery/create-new-password'
+  export default {
+    layout: 'default',
+    components: {
+      createNewPassword
+    },
+    head() {
+      return {
+        title: `Account Recovery | The Viking Voice`
+      }
+    },
+    async asyncData({ app, redirect, query, req }) {
+      /** Get request ID from the URL query. */
+      let requestId = req.query.request || query.request
+      /** If there's no request ID, redirect to the sign-in page. */
+      if (!requestId) {
+        console.log('NO REQUEST ID')
+        return redirect('/accounts/sign-in')
+      }
 
-    /** Check that the request is valid. */
-    let response = await app.$axios.post('/api/accounts/recovery/find', { requestId: requestId })
-    let { user, valid } = response.data
-    if (!valid) {
-      console.log('INVALID REQUEST')
-      /** Redirect away if the request is invalid. */
-      return redirect('/accounts/sign-in')
-    } else {
-      /** If the request is valid, allow the user to create a new password. */
-      return { state: 'RESET_PW', requestId, user }
-    }
-  },
-  methods: {
-    handleSuccess () {
-      this.state = 'SUCCESS'
+      /** Check that the request is valid. */
+      let response = await app.$axios.post('/api/accounts/recovery/find', { requestId: requestId })
+      let { user, valid } = response.data
+      if (!valid) {
+        console.log('INVALID REQUEST')
+        /** Redirect away if the request is invalid. */
+        return redirect('/accounts/sign-in')
+      }
+      else {
+        /** If the request is valid, allow the user to create a new password. */
+        return { state: 'RESET_PW', requestId, user }
+      }
+    },
+    methods: {
+      handleSuccess() {
+        this.state = 'SUCCESS'
+      }
     }
   }
-}
 </script>
 
 <style>

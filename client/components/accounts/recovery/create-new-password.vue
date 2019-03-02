@@ -1,60 +1,41 @@
 <template>
   <div>
-    <header class="mb-3">
-      <span class="text-muted">Account recovery</span>
-      <h1>Create a new password</h1>
+    <header>
+      <span class="is-size-5 has-text-grey">Account recovery</span>
+      <h1 class="title has-bottom-margin-1">Create a new password</h1>
     </header>
     <form @submit.prevent="resetPassword">
-      <div class="form-group mb-3">
-        <label
-          for="password"
-          class="sr-only"
-        >Password</label>
-        <input
-          id="password"
-          v-model="newPassword"
-          type="password"
-          class="form-control"
-          placeholder="Password"
-          required=""
-          autofocus=""
-        >
-      </div>
-      <div class="row">
-        <div class="col-8 d-flex" />
-        <div class="col-4">
-          <button class="btn btn-primary btn-block">
+        <b-field label="New Password"><b-input v-model="newPassword" /></b-field>
+          <button class="button is-info">
             Reset Password
           </button>
-        </div>
-      </div>
     </form>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'EnterPassword',
-  props: {
-    'requestId': {
-      type: String,
-      default () {
-        return ''
+  export default {
+    name: 'EnterPassword',
+    props: {
+      'requestId': {
+        type: String,
+        default () {
+          return ''
+        }
+      }
+    },
+    data() {
+      return {
+        newPassword: ''
+      }
+    },
+    methods: {
+      async resetPassword() {
+        /** Send the new password to the server. */
+        await this.$axios.post('/api/accounts/recovery/reset', { password: this.newPassword, requestId: this.requestId })
+        /** When that works out splendidly, let the user know. */
+        this.$emit('success', true)
       }
     }
-  },
-  data () {
-    return {
-      newPassword: ''
-    }
-  },
-  methods: {
-    async resetPassword () {
-      /** Send the new password to the server. */
-      await this.$axios.post('/api/accounts/recovery/reset', { password: this.newPassword, requestId: this.requestId })
-      /** When that works out splendidly, let the user know. */
-      this.$emit('success', true)
-    }
   }
-}
 </script>

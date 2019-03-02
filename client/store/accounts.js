@@ -13,11 +13,11 @@ export default {
   /* Account Actions */
   actions: {
     /** Get user info from store. */
-    FETCH_USER ({ state }) {
+    FETCH_USER({ state }) {
       return state.user
     },
     /** Get sign in state from store. */
-    GET_SIGNIN_STATE ({ state }) {
+    GET_SIGNIN_STATE({ state }) {
       return state.signInState
     }
   },
@@ -27,15 +27,17 @@ export default {
     /** Update user info in store. */
     UPDATE_USER: (state, user) => {
       if (user === 'SIGN_OUT') {
-      /** If the user is being signed out, set all info in user object to null. */
+        /** If the user is being signed out, set all info in user object to null. */
         Object.keys(state.user).forEach(key => {
           state.user[key] = null
         })
-      } else if (!user) {
+      }
+      else if (!user) {
         /** If no information is provided, don't change anything. */
-      } else {
-      /** Update the state with the information provided. */
-        state.user = user
+      }
+      else {
+        /** Update the state with the information provided. */
+        state.user = { ...state.user, ...user }
       }
     },
     /** Update the sign in state. */
