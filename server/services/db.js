@@ -1,4 +1,4 @@
-const { db } = maroon.config
+const { db } = require('../../config/app')
 const path = require('path')
 const { readdirSync } = require('fs')
 const Sequelize = require('sequelize')

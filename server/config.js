@@ -12,6 +12,7 @@ module.exports = {
     'middleware/util',
     'middleware/auth',
     'routers/accounts',
+    'routers/posts',
     'routers/nuxt'
   ],
 
