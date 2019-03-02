@@ -8,7 +8,10 @@
     </header>
     <form @submit.prevent="resetPassword">
       <b-field label="New Password">
-        <b-input v-model="newPassword" />
+        <b-input
+          v-model="newPassword"
+          class="vv-auth-input"
+        />
       </b-field>
       <button class="button is-info">
         Reset Password

@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
   /** Send an error 400 (bad request) if the user isn't found. */
   if (!user) {
     return res.status(400).send('Bad Request: User not found.')
-  } else if (user.authProvider !== 'Local') {
+  } else if (user.authProvider.indexOf('Local') === -1) {
     return res.status(400).send(`You can only reset the password of a local account. This account uses ${user.authProvider} as its authentication provider.`)
   }
 

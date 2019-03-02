@@ -1,8 +1,9 @@
 <template>
-  <main>
+  <main
+    class="vv-accounts"
+  >
     <div
       v-if="emailAddress"
-      class="vv-accounts"
     >
       <header>
         <h1 class="title has-bottom-margin-1">
@@ -15,7 +16,6 @@
     </div>
     <div
       v-else
-      class="vv-accounts box"
     >
       <header>
         <h1 class="title has-bottom-margin-1">

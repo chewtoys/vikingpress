@@ -28,6 +28,7 @@ const model = (sequelize, DataTypes) => {
     },
 
     /** Content */
+    excerpt: DataTypes.TEXT,
     dek: DataTypes.TEXT,
     body: DataTypes.TEXT,
 

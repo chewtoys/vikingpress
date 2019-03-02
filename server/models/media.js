@@ -18,13 +18,15 @@ const model = (sequelize, DataTypes) => {
       defaultValue: 'attachment'
     },
     mimeType: DataTypes.STRING,
-    path: DataTypes.STRING,
     slug: DataTypes.STRING,
 
-    /** Content */
+    /** More information */
     altText: DataTypes.STRING,
     caption: DataTypes.TEXT,
-    content: DataTypes.BLOB('long')
+
+    /** Paths to photo files */
+    path: DataTypes.STRING,
+    sizes: DataTypes.ARRAY(DataTypes.STRING)
   })
 }
 

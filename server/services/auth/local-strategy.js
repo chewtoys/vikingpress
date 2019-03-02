@@ -30,7 +30,7 @@ async function localStrategyHandler (username, password, done) {
         message: 'USER_NOT_FOUND'
       })
     } else {
-      if (user.authProvider !== 'Local') {
+      if (user.authProvider.indexOf('Local') === -1) {
       /** If the user's auth provider isn't local, return
        * an error indicating that the wrong auth provider was used.
        */

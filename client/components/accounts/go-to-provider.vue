@@ -1,16 +1,16 @@
 <template>
-  <div class="box vv-accounts">
+  <div class="vv-accounts">
     <h1 class="title">
       {{ user.welcomeMessage }}
     </h1>
     <p class="subtitle">
-      To continue, sign in with your {{ user.authProvider }} account.
+      To continue, sign in with your {{ user.authProvider[0] }} account.
     </p>
     <a
       class="button is-info"
-      :href="'/api/accounts/'+user.authProvider+'/start'"
+      :href="'/api/accounts/'+user.authProvider[0]+'/start'"
     >
-      Continue to {{ user.authProvider }}
+      Continue to {{ user.authProvider[0] }}
     </a>
     <hr role="presentation">
     <a

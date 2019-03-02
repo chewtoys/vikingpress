@@ -43,7 +43,7 @@ async function googleStrategyHandler (accessToken, refreshToken, googleProfile, 
     where: { email: googleProfile.emails[0].value }
   })
   if (userFromEmail) {
-    if (userFromEmail.authProvider === 'Google') {
+    if (userFromEmail.authProvider.indexOf('Google') === -1) {
       /** If their auth provider is listed as Google, we don't know
        * what went wrong. Return an unknown error.
        */

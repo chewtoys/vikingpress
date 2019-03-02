@@ -1,16 +1,20 @@
 <template>
   <div>
-    <h1 class="title">
-      {{ user.welcomeMessage }}
-    </h1>
+    <h1
+      class="title"
+      v-html="user.welcomeMessage"
+    />
     <p class="subtitle">
       Please enter your password.
     </p>
     <form @submit.prevent="signIn">
       <b-field label="Password">
-        <b-input v-model.trim="passwordInput" />
+        <b-input
+          v-model="passwordInput"
+          class="vv-auth-input"
+        />
       </b-field>
-      <div class="is-clearfix">
+      <div class="is-clearfix vv-auth-input">
         <a
           href="#"
           class="is-pulled-left is-small"

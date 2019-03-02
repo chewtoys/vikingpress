@@ -17,7 +17,7 @@ const model = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
 
     /** Name */
-    honorific: DataTypes.STRING,
+    title: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     displayName: DataTypes.STRING,
@@ -28,7 +28,7 @@ const model = (sequelize, DataTypes) => {
     permissionLevel: DataTypes.INTEGER,
 
     /** Auth */
-    authProvider: DataTypes.STRING,
+    authProvider: DataTypes.ARRAY(DataTypes.ENUM('Google', 'Local')),
     password: DataTypes.STRING,
     oauthIdentifier: DataTypes.STRING,
     resetHash: DataTypes.STRING
