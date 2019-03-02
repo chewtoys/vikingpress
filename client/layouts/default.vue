@@ -49,17 +49,42 @@ export default {}
     display: block;
   }
 
-  .vv-accounts {
-    display: flex;
-    align-items: center;
+  @media only screen and (max-width: 559px) {
+    .vv-accounts {
+      display: block;
+    }
+
+    .vv-accounts>div {
+      display: block;
+      margin: auto;
+      max-width: 100%;
+      padding: 20px;
+    }
   }
 
-  .vv-accounts>div {
-    display: block;
-    margin: auto;
-    max-width: 350px;
-    max-height: 350px;
-    padding: 40px 20px;
+  @media only screen and (min-width: 560px) {
+    .vv-accounts {
+      display: flex;
+      align-items: center;
+    }
+
+    .vv-accounts>div {
+      display: block;
+      margin: auto;
+      max-width: 600px;
+      max-height: 400px;
+      padding: 40px 20px;
+    }
+
+    hr {
+      max-width: 300px;
+      margin: 24px auto;
+    }
+
+    .vv-auth-input {
+      max-width: 300px;
+      margin: auto;
+    }
   }
 
   .has-bottom-margin-1 {
