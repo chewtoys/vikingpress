@@ -6,17 +6,12 @@
         <h1 class="title has-bottom-margin-1">Your password has been changed.</h1>
       </header>
       <p>You can now sign in with your new password.</p>
-      <div class="row">
-        <div class="col-8 d-flex" />
-        <div class="col-4">
           <nuxt-link
             to="/accounts/sign-in"
             class="btn btn-primary btn-block"
           >
             Sign In
           </nuxt-link>
-        </div>
-      </div>
     </div>
     <createNewPassword
       v-else-if="state === 'RESET_PW'"
