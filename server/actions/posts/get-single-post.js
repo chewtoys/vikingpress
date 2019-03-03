@@ -1,10 +1,9 @@
 const { autop } = require('@wordpress/autop')
-const { Collection, Comment, Media, Post, User, Sequelize } = require('../../services/db')
-const { Op } = Sequelize
+const { Collection, Comment, Media, Post, User } = require('../../services/db')
 const moment = require('moment')
 const { render } = require('ejs')
 
-module.exports = async function serveSinglePost(req, res) {
+module.exports = async function serveSinglePost (req, res) {
   let post = await findPost(req.query)
   if (post === 400 || post === 404) {
     return res.status(post).send()
@@ -12,7 +11,7 @@ module.exports = async function serveSinglePost(req, res) {
   res.send(post)
 }
 
-async function findPost(queries) {
+async function findPost (queries) {
   let where = {}
   if (queries.id) where.id = queries.id
   else if (queries.slug) {
@@ -51,13 +50,13 @@ async function findPost(queries) {
   return renderedPost
 }
 
-async function handleBody(post) {
+async function handleBody (post) {
   post.body = await handleMedia(post.body, post.media)
   post.body = autop(post.body)
   return post.body
 }
 
-async function handleCollections(collections) {
+async function handleCollections (collections) {
   if (!collections) {
     return null
   }
@@ -71,7 +70,7 @@ async function handleCollections(collections) {
   return collectionList
 }
 
-async function handleComments(comments) {
+async function handleComments (comments) {
   if (!comments) {
     return null
   }
@@ -86,11 +85,11 @@ async function handleComments(comments) {
   return commentList
 }
 
-function handleDate(date) {
+function handleDate (date) {
   return moment(date).format('MMMM Do, YYYY at h:mm A')
 }
 
-async function handleFeaturedImage(featuredImage) {
+async function handleFeaturedImage (featuredImage) {
   if (!featuredImage) {
     return null
   }
@@ -101,30 +100,27 @@ async function handleFeaturedImage(featuredImage) {
   }
 }
 
-function handleAuthors(authorList) {
+function handleAuthors (authorList) {
   if (authorList.length > 2) {
     let authors = ''
     for (let i = 0; i < authorList.length; i++) {
       if (i === authorList.length - 1) {
         authors += `and ${authorList[i].displayName}`
-      }
-      else {
+      } else {
         authors += `${authorList[i].displayName}, `
       }
     }
     return authors
-  }
-  else if (authorList.length === 2) {
+  } else if (authorList.length === 2) {
     return `${authorList[0].displayName} and ${authorList[1].displayName}`
-  }
-  else {
+  } else {
     return authorList[0].displayName
   }
 }
 
 const imageHtmlTemplate = `<figure><img src="/media/<%= image.path %>" alt="<% typeof image.altText === 'string' ? image.altText : ''%>"><% if (typeof image.caption === 'string') { %><figcaption><%= image.caption %></figcaption><% } %></figure>`
 
-async function handleMedia(body, media) {
+async function handleMedia (body, media) {
   if (!media) {
     return body
   }
