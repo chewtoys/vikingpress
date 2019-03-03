@@ -8,6 +8,10 @@ module.exports = async (req, res) => {
     /** Use the given ID to retrieve the user info from the database. */
     let user = await findUserByUsername(username, ['id', 'title', 'firstName', 'lastName', 'authProvider', 'permissionLevel'])
 
+    if (!user) {
+      res.send(null)
+    }
+
     /** Compile and send the user information. */
     let userInfo = {
       id: user.id,
@@ -23,7 +27,7 @@ module.exports = async (req, res) => {
   } catch (e) {
     maroon.out.warn(e)
     /** If there's no user found, find a dark corner to cry in. */
-    return res.status(404).send('User not found. Sad!')
+    return res.status(500).send(`Sorry, an unknown error occurred.`)
   }
 }
 

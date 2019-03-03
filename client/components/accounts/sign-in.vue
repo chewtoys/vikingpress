@@ -10,7 +10,11 @@
     </p>
 
     <form @submit.prevent="handleSubmit(usernameInput)">
-      <b-field label="Email or username">
+      <b-field
+        label="Email or username"
+        :type="error.exists === true ? 'is-danger' : null"
+        :message="error.message"
+      >
         <b-input
           v-model.trim="usernameInput"
           class="vv-auth-input"
@@ -36,7 +40,11 @@ export default {
   data () {
     return {
       usernameInput: '',
-      isLoading: false
+      isLoading: false,
+      error: {
+        exists: false,
+        message: ''
+      }
     }
   },
   methods: {
@@ -48,7 +56,11 @@ export default {
       })
       if (!account) {
         /** If no account is found, show an error message. */
-        // Insert error message logic here.
+        this.isLoading = false
+        this.error = {
+          exists: true,
+          message: `We couldn't find that account.`
+        }
       } else if (account.authProvider.indexOf('Local') === -1) {
         /** If the account exists and it's not local account, send them to their account provider. */
         this.$store.commit('accounts/UPDATE_USER', account)
@@ -60,7 +72,10 @@ export default {
         this.$store.commit('accounts/UPDATE_SIGNINSTATE', 1)
       } else {
         /** If we've made it here, something has gone wrong. Handle the error. */
-        // Uh oh. Handle the error.
+        this.error = {
+          exists: true,
+          message: `An unknown error occurred. Please contact us if this happens again.`
+        }
       }
     }
   }
