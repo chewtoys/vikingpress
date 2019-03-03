@@ -68,3 +68,4 @@ config/
 
 # VikingPress content files
 content/
+!client/pages/cms/content/

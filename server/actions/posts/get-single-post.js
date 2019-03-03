@@ -1,20 +1,29 @@
 const { autop } = require('@wordpress/autop')
-const { Collection, Comment, Media, Post, User } = require('../../services/db')
+const { Collection, Comment, Media, Post, User, Sequelize } = require('../../services/db')
+const { Op } = Sequelize
 const moment = require('moment')
 const { render } = require('ejs')
 
-module.exports = async function serveSinglePost (req, res) {
-  let { year, month, day, slug } = req.query
-  let post = await findPostByPath(`/${year}/${month}/${day}/${slug}/`)
-  if (!post) {
-    return res.status(404).send()
+module.exports = async function serveSinglePost(req, res) {
+  let post = await findPost(req.query)
+  if (post === 400 || post === 404) {
+    return res.status(post).send()
   }
   res.send(post)
 }
 
-async function findPostByPath (path) {
+async function findPost(queries) {
+  let where = {}
+  if (queries.id) where.id = queries.id
+  else if (queries.slug) {
+    let { year, month, day, slug } = queries
+    where.path = `/${year}/${month}/${day}/${slug}/`
+  }
+  if (!where) {
+    return 500
+  }
   let post = await Post.findOne({
-    where: { path },
+    where,
     include: [
       { model: Comment, as: 'Comments', where: { status: 'approved' }, attributes: ['id', 'authorName', 'content'], required: false },
       { model: Collection, as: 'Collections', attributes: ['id', 'title'] },
@@ -23,7 +32,7 @@ async function findPostByPath (path) {
     ]
   })
   if (!post) {
-    return null
+    return 404
   }
   let renderedPost = {
     title: post.title,
@@ -36,18 +45,19 @@ async function findPostByPath (path) {
     collections: await handleCollections(post.Collections),
     featuredImage: await handleFeaturedImage(post.FeaturedImage),
     body: await handleBody(post),
-    comments: await handleComments(post.Comments)
+    comments: await handleComments(post.Comments),
+    principalCategory: null // For now
   }
   return renderedPost
 }
 
-async function handleBody (post) {
+async function handleBody(post) {
   post.body = await handleMedia(post.body, post.media)
   post.body = autop(post.body)
   return post.body
 }
 
-async function handleCollections (collections) {
+async function handleCollections(collections) {
   if (!collections) {
     return null
   }
@@ -61,7 +71,7 @@ async function handleCollections (collections) {
   return collectionList
 }
 
-async function handleComments (comments) {
+async function handleComments(comments) {
   if (!comments) {
     return null
   }
@@ -76,42 +86,45 @@ async function handleComments (comments) {
   return commentList
 }
 
-function handleDate (date) {
-  return moment(date).format('dddd, MMMM Do YYYY')
+function handleDate(date) {
+  return moment(date).format('MMMM Do, YYYY at h:mm A')
 }
 
-async function handleFeaturedImage (featuredImage) {
+async function handleFeaturedImage(featuredImage) {
   if (!featuredImage) {
     return null
   }
   return {
-    altText: featuredImage.altText,
-    caption: featuredImage.caption,
-    path: featuredImage.path
+    altText: featuredImage.altText || '',
+    caption: featuredImage.caption || '',
+    path: featuredImage.path || ''
   }
 }
 
-function handleAuthors (authorList) {
+function handleAuthors(authorList) {
   if (authorList.length > 2) {
     let authors = ''
     for (let i = 0; i < authorList.length; i++) {
       if (i === authorList.length - 1) {
         authors += `and ${authorList[i].displayName}`
-      } else {
+      }
+      else {
         authors += `${authorList[i].displayName}, `
       }
     }
     return authors
-  } else if (authorList.length === 2) {
+  }
+  else if (authorList.length === 2) {
     return `${authorList[0].displayName} and ${authorList[1].displayName}`
-  } else {
+  }
+  else {
     return authorList[0].displayName
   }
 }
 
 const imageHtmlTemplate = `<figure><img src="/media/<%= image.path %>" alt="<% typeof image.altText === 'string' ? image.altText : ''%>"><% if (typeof image.caption === 'string') { %><figcaption><%= image.caption %></figcaption><% } %></figure>`
 
-async function handleMedia (body, media) {
+async function handleMedia(body, media) {
   if (!media) {
     return body
   }
