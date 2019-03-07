@@ -1,10 +1,9 @@
 <template>
-  <div style="background-color:#e5e3e2;">
+  <div style="background-color:#e5e3e2;padding-bottom:1px">
     <div
-      class="container box"
-      style="box-sizing:content-box; max-width:760px;"
+      class="container card"
     >
-      <div class="columns">
+      <div class="columns card-content">
         <div
           class="column"
           style="max-width:calc(100%-200px);"
@@ -23,7 +22,7 @@
             <b-input :value="authors" />
           </b-field>
           <b-field label="Collections">
-            <b-input :value="collections" />
+            <b-input :value="null" />
           </b-field>
         </div>
         <div class="column featured-image-column">
@@ -58,62 +57,21 @@
           </div>
         </div>
       </div>
-    </div><div
-      class="container box"
-      style="box-sizing:content-box; max-width:760px;"
-    >
-      <no-ssr>
-        <editor-menu-bar :editor="editor">
-          <div slot-scope="{ commands, isActive }">
-            <button
-              :class="{ 'is-active': isActive.bold() }"
-              @click="commands.bold"
-            >
-              Bold
-            </button>
-          </div>
-        </editor-menu-bar>
-        <editor-content :editor="editor" />
-      </no-ssr>
     </div>
+    <vp-editor :content="body" />
   </div>
 </template>
 
 <script>
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import {
-  Blockquote,
-  HardBreak,
-  Heading,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History
-}
-  from 'tiptap-extensions'
-
+import vpEditor from '~/components/editor/index.vue'
 export default {
   header () {
     return {
       title: 'Edit Post | The Viking Voice'
     }
   },
-  /** All the TipTap editor stuff */
   components: {
-    EditorContent,
-    EditorMenuBar
-  },
-  data () {
-    return {
-      editor: null
-    }
+    vpEditor
   },
   /** Fetch post data from server. */
   async asyncData ({ app, params, error }) {
@@ -136,41 +94,16 @@ export default {
       /** If the request failed, show an error page. */
       return error({ statusCode: 404 })
     }
-  },
-  mounted () {
-    this.editor = new Editor({
-      extensions: [
-        new Blockquote(),
-        new HardBreak(),
-        new Heading({ levels: [1, 2, 3] }),
-        new BulletList(),
-        new OrderedList(),
-        new ListItem(),
-        new TodoItem(),
-        new TodoList(),
-        new Bold(),
-        new Italic(),
-        new Link(),
-        new Strike(),
-        new Underline(),
-        new History()
-      ],
-      editorProps: {
-        attributes: {
-          class: 'ProseMirror content'
-        }
-      },
-      content: this.body
-    })
-    console.log(this.editor.getJSON())
-  },
-  beforeDestroy () {
-    this.editor.destroy()
   }
 }
 </script>
 
 <style>
+  .container.card {
+    margin-bottom: 2.5rem;
+    box-sizing: content-box;
+  }
+
   .is-featured-image {
     margin-top: 8px;
     background-color: black;
@@ -191,7 +124,7 @@ export default {
   }
 
   .ProseMirror {
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #e9e2db;
     border-radius: 4px;
     box-shadow: inset 0 1px 2px rgba(25, 23, 22, 0.1);
