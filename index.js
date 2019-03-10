@@ -1,7 +1,6 @@
 const MaroonServer = require('./server/maroon/server')
-const config = require('./config/app')
 
-global.maroon = new MaroonServer(config)
+global.maroon = new MaroonServer()
 
 try {
   maroon.initialize()
