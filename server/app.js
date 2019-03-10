@@ -34,10 +34,10 @@ app.use(bodyParser.json())
 app.use(helmet())
 
 // Use Morgan.
-app.use(morgan('combined'))
+app.use(morgan('dev'))
 
 // Serve static files in the /content directory.
-const staticDirectory = join(__dirname, '../../content')
+const staticDirectory = join(__dirname, '../content')
 app.use(express.static(staticDirectory))
 
 module.exports = app

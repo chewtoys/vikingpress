@@ -5,7 +5,7 @@ module.exports = function initializeGoogleAuthStrategy () {
   /** Assemble configuration info for Google auth strategy. */
   let googleStrategyConfig = {
     /** Pull clientID and clientSecret from maroon.config. */
-    ...maroon.config.googleApiConfig,
+    ...maroon.config.keys.google,
 
     /** Set the callback URL. This will depend on your auth-router configuration. */
     callbackURL: `https://${maroon.config.webAddress}/api/accounts/google/callback`,
