@@ -20,10 +20,10 @@ app.set('view engine', 'ejs')
 
 // Add basic site information to app.locals.
 app.locals = {
-    site: {
-        name: maroon.config.title,
-        url: `https://${maroon.config.webAddress}`
-    }
+  site: {
+    name: maroon.config.title,
+    url: `https://${maroon.config.webAddress}`
+  }
 }
 
 // Use bodyParser.

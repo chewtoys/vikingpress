@@ -4,12 +4,12 @@ const passport = require('passport')
 const { User } = require('../services/db')
 
 /** Convert user object to user ID. */
-async function serializeUser(user, done) {
+async function serializeUser (user, done) {
   return done(null, user.id)
 }
 
 /** Convert user ID to user object. */
-async function deserializeUser(id, done) {
+async function deserializeUser (id, done) {
   try {
     let user = await User.findOneById({ where: { id } })
     if (!user) {
@@ -18,12 +18,10 @@ async function deserializeUser(id, done) {
       })
     }
     return done(null, user)
-  }
-  catch (error) {
+  } catch (error) {
     return done(error)
   }
 }
-
 
 module.exports = {
   onEvent: 'initialize',
@@ -31,7 +29,7 @@ module.exports = {
    * Set up Passport
    * @param {function} app - Express app function
    */
-  fn: async function initializePassport() {
+  fn: async function initializePassport () {
     /** Set up serialize/deserialize functions. */
     passport.serializeUser(serializeUser)
     passport.deserializeUser(deserializeUser)
@@ -39,7 +37,7 @@ module.exports = {
     /** Set up strategies. */
     passport.use('google', googleStrategy)
     passport.use('local', localStrategy)
-    
+
     /** Initialize Passport. */
     maroon.app.use(passport.initialize())
   }
