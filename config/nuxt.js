@@ -56,7 +56,7 @@ module.exports.nuxt = {
   ],
 
   plugins: [
-    { src: '~/plugins/vuex-persist', ssr: false }
+    { src: '~/plugins/vuex-persist', ssr: false }, { src: '~/plugins/axios' }
   ],
 
   modules: [
@@ -72,14 +72,7 @@ module.exports.nuxt = {
 
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: `https://beta.nsmsvikingvoice.org`,
-    requestInterceptor: (config, { store }) => {
-      config.headers.common['X-Request-Origin'] = 'VikingPress Client'
-      if (store.state.accounts.user.token) {
-        config.headers.common['Authorization'] = `Bearer ${store.state.accounts.user.token}`
-      }
-      return config
-    }
+    baseURL: `https://beta.nsmsvikingvoice.org`
   },
 
   // Build configuration
