@@ -4,11 +4,11 @@
  * @see https://nodemailer.com/smtp/
  */
 module.exports.email = [{
-    port: 587,
-    secure: true,
-    host: 'YOUR_EMAIL_HOST',
-    auth: {
-        user: 'YOUR_SMTP_USERNAME',
-        pass: 'YOUR_SMTP_PASSWORD'
-    }
+  port: 587,
+  secure: true,
+  host: 'YOUR_EMAIL_HOST',
+  auth: {
+    user: 'YOUR_SMTP_USERNAME',
+    pass: 'YOUR_SMTP_PASSWORD'
+  }
 }]

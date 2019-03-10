@@ -2,9 +2,9 @@
 
 // API keys, passwords, etc
 module.exports.keys = {
-    // Google API keys (used for Google Sign In)
-    google: {
-        clientID: 'GOOGLE_CLIENT_ID_HERE',
-        clientSecret: 'GOOGLE_CLIENT_SECRET_HERE'
-    }
+  // Google API keys (used for Google Sign In)
+  google: {
+    clientID: 'GOOGLE_CLIENT_ID_HERE',
+    clientSecret: 'GOOGLE_CLIENT_SECRET_HERE'
+  }
 }

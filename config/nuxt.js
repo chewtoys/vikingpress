@@ -11,19 +11,19 @@ module.exports.nuxt = {
   head: {
     title: 'The Viking Voice',
     meta: [{
-        name: 'robots',
-        content: 'noindex'
-      }, {
-        charset: 'utf-8'
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      },
-      {
-        name: 'generator',
-        content: 'VikingPress'
-      }
+      name: 'robots',
+      content: 'noindex'
+    }, {
+      charset: 'utf-8'
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1'
+    },
+    {
+      name: 'generator',
+      content: 'VikingPress'
+    }
     ],
     link: [
       /* { We'll use this in future.
@@ -47,7 +47,6 @@ module.exports.nuxt = {
       }
     ]
   },
-
 
   /**
    * Global CSS
@@ -86,7 +85,7 @@ module.exports.nuxt = {
   // Build configuration
   build: {
     // You can extend webpack config here.
-    extend(config, ctx) {
+    extend (config, ctx) {
 
     }
   }

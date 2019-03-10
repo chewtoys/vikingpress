@@ -5,14 +5,14 @@
  * @see http://docs.sequelizejs.com/manual/installation/getting-started.html#setting-up-a-connection
  */
 module.exports.database = {
-    name: 'YOUR_DATABASE_NAME',
-    username: 'YOUR_DATABASE_USERNAME',
-    password: 'YOUR_DATABASE_PASSWORD',
-    options: {
-        dialect: 'postgresql',
-        operatorsAliases: false,
-        logging: false,
-        charset: 'utf8mb4',
-        collate: 'utf8mb4_unicode_ci'
-    }
+  name: 'YOUR_DATABASE_NAME',
+  username: 'YOUR_DATABASE_USERNAME',
+  password: 'YOUR_DATABASE_PASSWORD',
+  options: {
+    dialect: 'postgresql',
+    operatorsAliases: false,
+    logging: false,
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_unicode_ci'
+  }
 }
