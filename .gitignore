@@ -63,8 +63,9 @@ typings/
 # nuxt.js build output
 .nuxt
 
-# VikingPress configuration files
-config/
+# VikingPress private configuration files
+config/private/*
+!config/private/README.md
 
 # VikingPress content files
 content/
