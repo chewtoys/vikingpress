@@ -11,15 +11,15 @@ const jwt = require('jsonwebtoken')
  * @param {object} fromExpress.res - Response
  * @param {function} fromExpress.next - Go to next middleware
  */
-module.exports = async function handleAuthentication ({ err, user, info }, { req, res, next }) {
+module.exports = async function authenticateUser({ err, user, info }, { req, res, next }) {
   /** If there's an error, handle it. */
   if (err) {
-    return next(err)
+    return res.error(err)
   }
   /** If a user couldn't be found, go to next. */
   if (!user) {
     let response = info.message || 'ACCOUNT_NOT_FOUND'
-    return next(response)
+    return res.fail(404, response)
   }
   /** Try to create and send an auth token for the user. */
   try {
@@ -27,8 +27,9 @@ module.exports = async function handleAuthentication ({ err, user, info }, { req
     let authToken = jwt.sign({
       userId: user.id
     }, privateKey, options)
-    return res.send({ token: authToken })
-  } catch (error) {
-    return next(error)
+    return res.success({ token: authToken })
+  }
+  catch (error) {
+    return res.error(error)
   }
 }

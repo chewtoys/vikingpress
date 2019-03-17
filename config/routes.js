@@ -10,16 +10,21 @@ module.exports.routes = {
         put: { action: 'accounts/update' },
         delete: { action: 'accounts/delete' }
       },
-      '/resets': {
+      '/reset-password': {
         post: { action: 'accounts/create-reset-request' },
         '/:id': {
           get: { action: 'accounts/get-reset-request' },
           post: { action: 'accounts/reset-password' }
         }
       },
-      'post /sign-in-local': { action: 'accounts/sign-in/local' },
-      'get /sign-in-google': { action: 'accounts/sign-in/google' },
-      'post /sign-in-google': { action: 'accounts/sign-in/google-callback' }
+      '/sign-in': {
+        'post /find-account': { action: 'accounts/sign-in/find-account' },
+        '/google': {
+          get: { action: 'accounts/sign-in/google' },
+          post: { action: 'accounts/sign-in/google-callback' }
+        },
+        'post /local': { action: 'accounts/sign-in/local' }
+      }
     },
     // Comments API routes
     '/comments': {

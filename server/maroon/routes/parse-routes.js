@@ -9,7 +9,7 @@ const { isObject, keys, last } = require('lodash')
  * @author Scott Gress
  * @see {@link https://github.com/balderdashy/sails/blob/master/lib/util/detect-verb.js|Original Code from Sails.js}
  */
-function getMethodAndPathOfRoute (haystack) {
+function getMethodAndPathOfRoute(haystack) {
   // Convert original string to lowercase.
   // Why is it called a haystack? I don't know, ask the Sails people.
   haystack = haystack.toLowerCase()
@@ -22,7 +22,8 @@ function getMethodAndPathOfRoute (haystack) {
   // If a method was specified, eliminate the method from the original string
   if (methodSpecified) {
     haystack = haystack.replace(methodExp, '').trim()
-  } else {
+  }
+  else {
     haystack = haystack.trim()
   }
 
@@ -37,11 +38,12 @@ function getMethodAndPathOfRoute (haystack) {
  * Determine whether the object is a route definition or the parent of other routes.
  * @param {string} route
  */
-function getTypeOfRoute (route) {
+function getTypeOfRoute(route) {
   if (isObject(route)) {
     if (route.action || route.redirect || route.response) {
       return 'route'
-    } else {
+    }
+    else {
       return 'parent'
     }
   }
@@ -55,7 +57,7 @@ function getTypeOfRoute (route) {
  * @param {object} parent - The parent object's method and path, parsed
  * @param {array} routeList - Master list of routes
  */
-function parseSingleRoute (routes, routeName, parent, routeList) {
+function parseSingleRoute(routes, routeName, parent, routeList) {
   // Parse out the method and path of the current route.
   let parsedExp = getMethodAndPathOfRoute(routeName)
 
@@ -71,11 +73,16 @@ function parseSingleRoute (routes, routeName, parent, routeList) {
     // Get route's handler.
     let handler = routes[routeName]
     // Push to routeList.
-    routeList.push({
-      method,
-      path,
-      handler
-    })
+    if (method && path && handler) {
+      routeList.push({
+        method,
+        path,
+        handler
+      })
+    }
+    else {
+      throw new Error(`Invalid route definition: method '${method}', path '${path}', and handler ${handler}.`)
+    }
   }
   // If the object is a parent of other routes, parse the object.
   else if (type === 'parent') {
@@ -96,7 +103,7 @@ function parseSingleRoute (routes, routeName, parent, routeList) {
  * @param {object=} parent - The parent object's method and path
  * @param {array=} routeList - Master list of routes
  */
-function parseMultipleRoutes (routes, parent, routeList) {
+function parseMultipleRoutes(routes, parent, routeList) {
   // If this is the root object, bootstrap the parent object and routeList array.
   if (!parent) {
     parent = {
