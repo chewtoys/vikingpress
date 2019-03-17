@@ -1,7 +1,7 @@
 const initializeRoutes = require('./routes')
 const registerHooks = require('./hooks')
 
-module.exports = async function() {
+module.exports = async function () {
   // Register hooks and run the ones that need to be run on startup.
   await registerHooks()
   // Initialize routes.

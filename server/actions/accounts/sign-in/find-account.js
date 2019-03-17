@@ -1,12 +1,12 @@
 const findUserByUsername = require('../../../helpers/find-user')
 
-module.exports = async(req, res) => {
+module.exports = async (req, res) => {
   maroon.out.debug(req.headers)
   try {
-  let { username } = req.body
-  if (!username) {
-    return res.fail(400, `Enter an email address or username.`)
-  }
+    let { username } = req.body
+    if (!username) {
+      return res.fail(400, `Enter an email address or username.`)
+    }
     // Use the given ID to retrieve the user info from the database.
     let user = await findUserByUsername(username, ['id', 'title', 'firstName', 'lastName', 'authProvider', 'permissionLevel'])
 
@@ -23,8 +23,7 @@ module.exports = async(req, res) => {
     }
 
     res.success(userInfo)
-  }
-  catch (e) {
+  } catch (e) {
     // If an unknown error occurs, find a dark corner to cry in.
     return res.error(e)
   }
@@ -33,7 +32,7 @@ module.exports = async(req, res) => {
 /**
  * Use request information and the user record to construct a welcome message for users when they sign in.
  */
-function constructWelcomeMessage(req, user) {
+function constructWelcomeMessage (req, user) {
   /** @todo Use the request information to determine whether to trust the user request. */
   let trustReq = true
 

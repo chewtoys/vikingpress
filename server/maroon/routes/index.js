@@ -6,7 +6,7 @@ let nonexistentActions = []
  * Get the route handler.
  * @param {object} handler - The given specification for the route handler
  */
-function getRouteHandler(handler) {
+function getRouteHandler (handler) {
   if (handler.action) {
     // If the handler is an action, try requiring the handler from the actions directory.
     try {
@@ -19,7 +19,7 @@ function getRouteHandler(handler) {
         // Add it to the list of non-existent modules.
         nonexistentActions.push(handler.action)
         // Return a temporary handler function.
-        return function(req, res) {
+        return function (req, res) {
           res.error(501, `The requested endpoint ${req.originalUrl} has not yet been implemented.`)
         }
       }
@@ -31,7 +31,7 @@ function getRouteHandler(handler) {
   }
 }
 
-module.exports = function initializeRoutes() {
+module.exports = function initializeRoutes () {
   // Iterate through the list of routes.
   for (let routeIndex = 0; routeIndex < routes.length; routeIndex++) {
     // Destructure the method, path, and handler from the route definition.

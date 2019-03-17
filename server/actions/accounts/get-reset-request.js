@@ -1,8 +1,8 @@
 const { User } = require('../../services/db')
 
-module.exports = async(req, res) => {
+module.exports = async (req, res) => {
   /** Extract the request ID from request parameters. */
-  let {id} = req.params
+  let { id } = req.params
 
   /** Locate the reset request in the database. */
   let user = await User.findOne({ where: { resetHash: id } }, ['id', 'email'])

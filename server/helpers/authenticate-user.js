@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken')
  * @param {object} fromExpress.res - Response
  * @param {function} fromExpress.next - Go to next middleware
  */
-module.exports = async function authenticateUser({ err, user, info }, { req, res, next }) {
+module.exports = async function authenticateUser ({ err, user, info }, { req, res, next }) {
   /** If there's an error, handle it. */
   if (err) {
     return res.error(err)
@@ -28,8 +28,7 @@ module.exports = async function authenticateUser({ err, user, info }, { req, res
       userId: user.id
     }, privateKey, options)
     return res.success({ token: authToken })
-  }
-  catch (error) {
+  } catch (error) {
     return res.error(error)
   }
 }
